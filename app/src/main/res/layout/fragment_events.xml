@@ -4,13 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="eventsFragment"
+            type="com.saxomoose.frontend.ui.events.EventsFragment" />
+        <variable
+            name="viewModel"
+            type="com.saxomoose.frontend.viewmodels.EventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.EventsFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:listData="@{viewModel.events}"
+            tools:listitem="@layout/item_event" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

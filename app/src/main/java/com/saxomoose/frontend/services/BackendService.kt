@@ -1,8 +1,10 @@
 package com.saxomoose.frontend.services
 
 import com.saxomoose.frontend.models.Category
+import com.saxomoose.frontend.models.Event
 import com.serjltt.moshi.adapters.Wrapped
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,7 +13,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import java.util.*
 
+// TODO get token from login activity.
 private const val BASE_URL = "http://demo.backend.test/api/"
 private const val token = "1|cYpZHYCdcL5HDY0LsVd1PriWMTZwSkhjeeoffEhY"
 private const val TOP_LEVEL_FIELD = "data"
@@ -30,8 +34,10 @@ class BackendInterceptor : Interceptor {
 }
 
 private val moshi = Moshi.Builder()
-    // First adapter used to skip top level field of incoming json.
+    // First adapter used to skip top level field of incoming json. TODO import functionality into project.
     .add(Wrapped.ADAPTER_FACTORY)
+    // Date adapter.
+    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
     .add(KotlinJsonAdapterFactory())
     .build()
 
@@ -44,9 +50,12 @@ private val retrofit = Retrofit.Builder()
 interface BackendService {
     @GET("categories")
     suspend fun getCategories(): String
+    @GET("users/{user}/events")
+    @Wrapped(path = [TOP_LEVEL_FIELD])
+    suspend fun getUserEvents(@Path("user") userId : Int) : List<Event>
     @GET("events/{event}/categories")
     @Wrapped(path = [TOP_LEVEL_FIELD])
-    suspend fun getEventCategories(@Path("event") event : Int) : List<Category>
+    suspend fun getEventCategories(@Path("event") eventId : Int) : List<Category>
 }
 
 object BackendApi {
