@@ -35,8 +35,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector
         appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_events, R.id.fragment_transaction, R.id.fragment_overview))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //
-
         // Backend connectivity test
 //        lifecycleScope.launch {
 //            val response = BackendApi.retrofitService.getEventCategories(1)

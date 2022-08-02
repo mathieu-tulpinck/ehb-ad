@@ -44,7 +44,7 @@ class CatalogueFragment : Fragment() {
         binding?.catalogueViewModel = catalogueViewModel
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recyclerView?.adapter = DataItemAdapter(this)
-        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  LinearLayoutManager(requireContext()).orientation)
         binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
 
         // TransactionViewModel

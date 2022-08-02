@@ -37,7 +37,7 @@ class EventsFragment : Fragment() {
         // Sets the adapter of the RecyclerView.
         binding?.recyclerView?.adapter = EventAdapter(this)
         // Adds a divider between Event items.
-        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  LinearLayoutManager(requireContext()).orientation)
         binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
         // TODO why? Inspired by Cupcake.
         // binding?.eventsFragment = this

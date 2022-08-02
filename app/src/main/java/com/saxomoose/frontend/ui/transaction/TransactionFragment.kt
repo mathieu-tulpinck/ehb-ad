@@ -31,7 +31,7 @@ class TransactionFragment : Fragment() {
         binding?.viewModel = viewModel
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.recyclerView?.adapter = TransactionItemAdapter(this)
-        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  LinearLayoutManager(requireContext()).orientation)
         binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
 
     }
@@ -39,6 +39,5 @@ class TransactionFragment : Fragment() {
     // Calls shared ViewModel to decrease the quantity of the TransactionItem.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
-        // binding?.recyclerView?.adapter?.notifyDataSetChanged()
     }
 }
