@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.models.TransactionItem
@@ -29,7 +30,9 @@ class TransactionFragment : Fragment() {
         binding?.lifecycleOwner = viewLifecycleOwner
         binding?.viewModel = viewModel
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-       binding?.recyclerView?.adapter = TransactionItemAdapter(this)
+        binding?.recyclerView?.adapter = TransactionItemAdapter(this)
+        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
+        binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
 
     }
 
