@@ -8,8 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentCatalogueBinding
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
+import com.saxomoose.frontend.ui.MenuItemSelector
 import com.saxomoose.frontend.ui.events.EventsViewModelFactory
 import kotlin.properties.Delegates
 
@@ -42,5 +45,9 @@ class CatalogueFragment : Fragment() {
         binding?.recyclerView?.adapter = DataItemAdapter()
         val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
         binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
+
+        // Sync BottomNavigationView
+        val activity = activity as MenuItemSelector
+        activity.selectEventsMenuItem()
     }
 }

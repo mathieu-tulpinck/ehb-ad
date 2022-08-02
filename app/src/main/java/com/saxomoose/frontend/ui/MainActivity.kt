@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,7 +16,7 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -27,12 +28,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController = navHostFragment.navController
 
         // BottomNavigation
-        val navView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
-        navView.setupWithNavController(navController)
+        val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
+        bottomNavView.setupWithNavController(navController)
 
         // ActionBar
         appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_events, R.id.fragment_transaction, R.id.fragment_overview))
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //
 
         // Backend connectivity test
 //        lifecycleScope.launch {
@@ -41,6 +44,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //            val response2 = BackendApi.retrofitService.getUserEvents(1)
 //            logging(response2.toString())
 //        }
+    }
+
+    override fun selectEventsMenuItem() {
+        val bottomNavView: BottomNavigationView? = findViewById(R.id.bottom_nav_view)
+        bottomNavView?.selectedItemId = R.id.fragment_events
+        bottomNavView?.menu?.findItem(R.id.fragment_events)?.isChecked = true
     }
 
     override fun onSupportNavigateUp(): Boolean {
