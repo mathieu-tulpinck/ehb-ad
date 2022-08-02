@@ -1,8 +1,6 @@
 package com.saxomoose.frontend.models
 
-import com.squareup.moshi.Json
-import java.util.*
-
+// This wrapper around Category and Item object is used to pass data to the RecyclerView in the CatalogueFragment.
 sealed class DataItem {
 
     data class ItemRow (val item: Item) : DataItem() {

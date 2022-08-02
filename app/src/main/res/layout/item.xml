@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="catalogueFragment"
+            type="com.saxomoose.frontend.ui.catalogue.CatalogueFragment" />
         <variable
             name="item"
             type="com.saxomoose.frontend.models.Item" />
@@ -13,7 +15,8 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/name_text_view"
@@ -28,15 +31,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:itemPrice="@{item.price}"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:itemPrice="@{item.price}" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/add" />
+            android:text="@string/add"
+            android:onClick="@{() -> catalogueFragment.addItem(item)}"/>
 
     </LinearLayout>
 </layout>

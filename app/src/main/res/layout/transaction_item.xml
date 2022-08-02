@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="event"
-            type="com.saxomoose.frontend.models.Event" />
+            name="transactionItem"
+            type="com.saxomoose.frontend.models.TransactionItem" />
     </data>
 
     <LinearLayout
@@ -21,33 +20,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingEnd="8dp"
-            android:paddingRight="8dp"
-            android:text="@{event.name}"
-            android:textSize="16sp"
-            tools:ignore="RtlSymmetry" />
+            android:text="@{transactionItem.name}"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/date_text_view"
+            android:id="@+id/quantity_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingStart="8dp"
-            android:paddingLeft="8dp"
-            android:paddingEnd="8dp"
-            android:paddingRight="8dp"
             android:textSize="16sp"
-            app:eventDate="@{event.date}"
-            tools:ignore="RtlSymmetry" />
+            app:transactionItemQuantity="@{transactionItem.quantity}" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
-            android:text="@string/items" />
+            android:text="@string/remove" />
 
     </LinearLayout>
 </layout>

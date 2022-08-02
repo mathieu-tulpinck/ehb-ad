@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
 
-
 // TODO get userId from login activity.
 private const val USER_ID = 1
 
@@ -31,12 +30,13 @@ class EventsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment.
-        binding?.lifecycleOwner = this
+        binding?.lifecycleOwner = viewLifecycleOwner
         // Giving the binding access to the EventsViewModel.
         binding?.viewModel = viewModel
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         // Sets the adapter of the RecyclerView.
         binding?.recyclerView?.adapter = EventAdapter(this)
+        // Adds a divider between Event items.
         val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
         binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
         // TODO why? Inspired by Cupcake.

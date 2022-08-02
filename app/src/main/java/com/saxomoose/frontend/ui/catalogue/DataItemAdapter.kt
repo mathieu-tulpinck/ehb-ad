@@ -12,10 +12,10 @@ import com.saxomoose.frontend.models.DataItem
 import com.saxomoose.frontend.models.Item
 import java.lang.ClassCastException
 
-private const val HEADER = 0
+private const val CATEGORY = 0
 private const val ITEM = 1
 
-class DataItemAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
+class DataItemAdapter(private val fragment: CatalogueFragment) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     class CategoryViewHolder(private var binding: CategoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
@@ -25,7 +25,8 @@ class DataItemAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallb
     }
 
     class ItemViewHolder(private var binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item) {
+        fun bind(fragment: CatalogueFragment, item: Item, ) {
+            binding.catalogueFragment = fragment
             binding.item = item
             binding.executePendingBindings()
         }
@@ -43,7 +44,7 @@ class DataItemAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallb
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
-            HEADER -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            CATEGORY -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             ITEM -> ItemViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw ClassCastException("Unknown viewType ${viewType}")
         }
@@ -51,7 +52,7 @@ class DataItemAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallb
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is DataItem.CategoryRow -> HEADER
+            is DataItem.CategoryRow -> CATEGORY
             is DataItem.ItemRow -> ITEM
         }
     }
@@ -64,7 +65,7 @@ class DataItemAdapter : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallb
             }
             is ItemViewHolder -> {
                 val itemRow = getItem(position) as DataItem.ItemRow
-                holder.bind(itemRow.item)
+                holder.bind(fragment, itemRow.item)
             }
         }
     }
