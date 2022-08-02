@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">FrontEnd</string>
-    <string name ="catalogue">Catalogue</string>
+    <string name ="catalogue">Items</string>
     <string name="events">Events</string>
     <string name="transaction">Transaction</string>
     <string name="overview">Transaction overview</string>
+    <string name="items">Items</string>
 </resources>

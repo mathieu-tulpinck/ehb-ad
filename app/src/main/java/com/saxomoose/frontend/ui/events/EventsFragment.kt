@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
-import com.saxomoose.frontend.viewmodels.EventsViewModel
-import com.saxomoose.frontend.viewmodels.EventsViewModelFactory
+
 
 // TODO get userId from login activity.
 private const val USER_ID = 1
 
+// Displays the user events.
 class EventsFragment : Fragment() {
     // Binding object instance corresponding to the fragment_events.xml layout. This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks, when the view hierarchy is attached to the fragment.
     private var binding: FragmentEventsBinding? = null
@@ -35,8 +36,10 @@ class EventsFragment : Fragment() {
         binding?.viewModel = viewModel
         binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         // Sets the adapter of the RecyclerView.
-        binding?.recyclerView?.adapter = EventAdapter()
+        binding?.recyclerView?.adapter = EventAdapter(this)
+        val dividerItemDecoration = DividerItemDecoration(binding?.recyclerView?.context,  (binding?.recyclerView?.layoutManager as LinearLayoutManager).orientation)
+        binding?.recyclerView?.addItemDecoration(dividerItemDecoration)
         // TODO why? Inspired by Cupcake.
-        binding?.eventsFragment = this
+        // binding?.eventsFragment = this
     }
 }

@@ -2,21 +2,23 @@ package com.saxomoose.frontend.ui.events
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.saxomoose.frontend.databinding.ItemEventBinding
+import com.saxomoose.frontend.databinding.EventBinding
 import com.saxomoose.frontend.models.Event
-import com.saxomoose.frontend.viewmodels.EventsViewModel
 
 // This class implements a RecyclerView ListAdapter which uses data binding to present List data, including computing diffs between Lists.
-class EventAdapter : ListAdapter<Event, EventAdapter.EventsViewHolder>(DiffCallback) {
+class EventAdapter(private val fragment: Fragment) : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback) {
     // The constructor takes the binding variable from the associated ItemEvent.
-    class EventsViewHolder(private var binding: ItemEventBinding) : RecyclerView.ViewHolder(binding.root) {
+    class EventViewHolder(private var binding: EventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
             binding.event = event
             binding.executePendingBindings()
         }
+        val button = binding.button
     }
 
     // Allows the RecyclerView to determine which items have changed when the List of Event has been updated.
@@ -26,17 +28,22 @@ class EventAdapter : ListAdapter<Event, EventAdapter.EventsViewHolder>(DiffCallb
         }
 
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
     }
 
-    // Create new RecyclerView item views (invoked by the layout manager).
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
-        return EventsViewHolder(ItemEventBinding.inflate(LayoutInflater.from(parent.context)))
+    // Creates new RecyclerView item views (invoked by the layout manager).
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+        return EventViewHolder(EventBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
+    // Updates the contents of the RecyclerView.ViewHolder.itemView to reflect the item at the given position (invoked by the layout manager).
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event)
+        holder.button.setOnClickListener {
+            val action = EventsFragmentDirections.actionFragmentEventsToFragmentCatalogue(eventId = event.id)
+            findNavController(fragment).navigate(action)
+        }
     }
 }

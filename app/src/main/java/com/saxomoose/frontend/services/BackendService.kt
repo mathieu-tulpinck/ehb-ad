@@ -2,6 +2,7 @@ package com.saxomoose.frontend.services
 
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.Event
+import com.saxomoose.frontend.models.Item
 import com.serjltt.moshi.adapters.Wrapped
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
@@ -53,6 +54,9 @@ interface BackendService {
     @GET("users/{user}/events")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun getUserEvents(@Path("user") userId : Int) : List<Event>
+    @GET("events/{event}/items")
+    @Wrapped(path = [TOP_LEVEL_FIELD])
+    suspend fun getEventItems(@Path("event") eventId : Int) : List<Item>
     @GET("events/{event}/categories")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun getEventCategories(@Path("event") eventId : Int) : List<Category>

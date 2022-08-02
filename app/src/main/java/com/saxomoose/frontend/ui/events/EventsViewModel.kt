@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.viewmodels
+package com.saxomoose.frontend.ui.events
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -23,7 +23,7 @@ class EventsViewModel(userId: Int) : ViewModel() {
         getUserEvents(userId)
     }
 
-    // Gets the events from the BackendService and updates the <List<Event>>. TODO is coming in but not displayed
+    // Gets the events from the BackendService and updates the <List<Event>>.
     private fun getUserEvents(userId: Int) {
         viewModelScope.launch {
             try {

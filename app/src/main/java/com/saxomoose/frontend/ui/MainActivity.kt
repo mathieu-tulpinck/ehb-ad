@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navView.setupWithNavController(navController)
 
         // ActionBar
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_events, R.id.navigation_transaction, R.id.navigation_overview))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_events, R.id.fragment_transaction, R.id.fragment_overview))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Backend connectivity test
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onSupportNavigateUp(): Boolean {
         // This code will ask the navController to handle navigating up in the app. Otherwise, fall back to back to the superclass implementation (in  appCompatActivity) of handling the Up button.
-        return navController.navigateUp(appBarConfiguration)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     private fun logging(message: String) {

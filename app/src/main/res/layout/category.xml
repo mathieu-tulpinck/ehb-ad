@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="category"
+            type="com.saxomoose.frontend.models.Category" />
+    </data>
+
+    <TextView
+        android:id="@+id/category_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@{category.name}"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</layout>
