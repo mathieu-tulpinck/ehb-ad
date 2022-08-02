@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui.catalogue
+package com.saxomoose.frontend.ui.home.catalogue
 
 import android.annotation.SuppressLint
 import android.widget.TextView

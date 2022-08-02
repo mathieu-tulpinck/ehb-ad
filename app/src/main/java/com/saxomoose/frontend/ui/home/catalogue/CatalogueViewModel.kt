@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui.catalogue
+package com.saxomoose.frontend.ui.home.catalogue
 
 import androidx.lifecycle.*
 import com.saxomoose.frontend.models.Category

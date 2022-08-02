@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui
+package com.saxomoose.frontend.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.saxomoose.frontend.databinding.TransactionItemBinding
 import com.saxomoose.frontend.models.TransactionItem
-import com.saxomoose.frontend.ui.transaction.TransactionFragment
+import com.saxomoose.frontend.ui.home.transaction.TransactionFragment
 
-class TransactionItemAdapter(private val transactionFragment: TransactionFragment) : ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(DiffCallback){
+class TransactionItemAdapter(private val transactionFragment: TransactionFragment) : ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(
+    DiffCallback
+){
 
     class TransactionItemViewHolder(private var binding: TransactionItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItem: TransactionItem) {

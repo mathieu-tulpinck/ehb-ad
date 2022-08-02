@@ -6,10 +6,10 @@
     <data>
         <!--        <variable-->
         <!--            name="eventsFragment"-->
-        <!--            type="com.saxomoose.frontend.ui.events.EventsFragment" />-->
+        <!--            type="com.saxomoose.frontend.ui.home.events.EventsFragment" />-->
         <variable
             name="viewModel"
-            type="com.saxomoose.frontend.ui.events.EventsViewModel" />
+            type="com.saxomoose.frontend.ui.home.events.EventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

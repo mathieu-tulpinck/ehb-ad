@@ -1,6 +1,5 @@
-package com.saxomoose.frontend.ui.events
+package com.saxomoose.frontend.ui.home.events
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.saxomoose.frontend.models.Event
 import com.saxomoose.frontend.services.BackendApi

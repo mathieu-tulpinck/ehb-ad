@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui
+package com.saxomoose.frontend.ui.home
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

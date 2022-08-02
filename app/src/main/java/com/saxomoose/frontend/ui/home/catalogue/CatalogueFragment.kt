@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui.catalogue
+package com.saxomoose.frontend.ui.home.catalogue
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.databinding.FragmentCatalogueBinding
 import com.saxomoose.frontend.models.Item
-import com.saxomoose.frontend.ui.MenuItemSelector
-import com.saxomoose.frontend.ui.TransactionViewModel
+import com.saxomoose.frontend.ui.home.MenuItemSelector
+import com.saxomoose.frontend.ui.home.TransactionViewModel
 
 // Displays the event items.
 class CatalogueFragment : Fragment() {

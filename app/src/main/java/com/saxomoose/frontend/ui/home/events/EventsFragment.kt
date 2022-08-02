@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui.events
+package com.saxomoose.frontend.ui.home.events
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,6 +1,5 @@
-package com.saxomoose.frontend.ui.transaction
+package com.saxomoose.frontend.ui.home.transaction
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.models.TransactionItem
-import com.saxomoose.frontend.ui.TransactionItemAdapter
-import com.saxomoose.frontend.ui.TransactionViewModel
+import com.saxomoose.frontend.ui.home.TransactionItemAdapter
+import com.saxomoose.frontend.ui.home.TransactionViewModel
 
 class TransactionFragment : Fragment() {
     private var binding: FragmentTransactionBinding? = null

@@ -6,16 +6,16 @@
     <data>
         <variable
             name="catalogueViewModel"
-            type="com.saxomoose.frontend.ui.catalogue.CatalogueViewModel" />
+            type="com.saxomoose.frontend.ui.home.catalogue.CatalogueViewModel" />
         <variable
             name="transactionViewModel"
-            type="com.saxomoose.frontend.ui.TransactionViewModel" />
+            type="com.saxomoose.frontend.ui.home.TransactionViewModel" />
      </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.catalogue.CatalogueFragment">
+        tools:context=".ui.home.catalogue.CatalogueFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

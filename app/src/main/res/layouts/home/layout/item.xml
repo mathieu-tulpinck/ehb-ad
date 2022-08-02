@@ -5,7 +5,7 @@
     <data>
         <variable
             name="catalogueFragment"
-            type="com.saxomoose.frontend.ui.catalogue.CatalogueFragment" />
+            type="com.saxomoose.frontend.ui.home.catalogue.CatalogueFragment" />
         <variable
             name="item"
             type="com.saxomoose.frontend.models.Item" />

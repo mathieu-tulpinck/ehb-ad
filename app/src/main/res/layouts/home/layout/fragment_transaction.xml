@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.saxomoose.frontend.ui.TransactionViewModel" />
+            type="com.saxomoose.frontend.ui.home.TransactionViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.transaction.TransactionFragment">
+        tools:context=".ui.home.transaction.TransactionFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

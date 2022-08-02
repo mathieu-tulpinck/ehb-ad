@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui
+package com.saxomoose.frontend.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
