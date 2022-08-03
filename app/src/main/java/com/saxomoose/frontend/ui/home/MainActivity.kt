@@ -14,6 +14,10 @@ import com.saxomoose.frontend.R
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector {
 
+    companion object {
+        const val USER_ID = "userId"
+    }
+
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
