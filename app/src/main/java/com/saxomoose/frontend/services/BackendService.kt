@@ -35,9 +35,7 @@ class BackendInterceptor(private val token: String?) : Interceptor {
         val request = builder.build()
         val tag = request.tag(Invocation::class.java)?.method()?.hashCode()
         // register and login requests should not have bearer token.
-        if (REGISTER_METHOD_HASHCODE == tag) {
-            return chain.proceed(request)
-        } else if (LOGIN_METHOD_HASHCODE == tag) {
+        if (tag == REGISTER_METHOD_HASHCODE || tag == LOGIN_METHOD_HASHCODE) {
             return chain.proceed(request)
         } else {
             val newRequest  = request.newBuilder().addHeader("Authorization", "Bearer $token").build()

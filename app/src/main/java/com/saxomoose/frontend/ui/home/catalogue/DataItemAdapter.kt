@@ -42,18 +42,18 @@ class DataItemAdapter(private val fragment: CatalogueFragment) : ListAdapter<Dat
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
-            CATEGORY -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            ITEM -> ItemViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> throw ClassCastException("Unknown viewType ${viewType}")
-        }
-    }
-
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is DataItem.CategoryRow -> CATEGORY
             is DataItem.ItemRow -> ITEM
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType) {
+            CATEGORY -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ITEM -> ItemViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
 

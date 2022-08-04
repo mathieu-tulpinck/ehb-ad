@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
                 showLoginFailed()
             }
             if (loginResult) {
-                // Write token to SharedPreferences.
+                // Write token and userId to SharedPreferences.
                 val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                 with(sharedPref?.edit()) {
                     this?.putString(getString(R.string.token), viewModel.token)
