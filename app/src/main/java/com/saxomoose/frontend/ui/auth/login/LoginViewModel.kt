@@ -2,15 +2,13 @@ package com.saxomoose.frontend.ui.auth.login
 
 import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.ui.auth.LoginCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
 import com.saxomoose.frontend.ui.auth.login.LoginFormState
+import com.saxomoose.frontend.ui.home.catalogue.CatalogueViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
@@ -19,7 +17,14 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "LoginViewModel"
 
+class LoginViewModelFactory(): ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(null, null) as T
+}
+
 class LoginViewModel(var userId: Int?, var token : String?) : ViewModel() {
+
+
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -39,13 +44,11 @@ class LoginViewModel(var userId: Int?, var token : String?) : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val response = BackendApi.retrofitService.login(body)
-                if (response.code() == 200) {
-                    token = response.body()?.token
-                    userId = response.body()?.userId
-                    if (token != null && userId != null) {
-                        _loginResult.value = true
-                    }
+                val response = BackendApi().retrofitService.login(body)
+                token = response.token
+                userId = response.userId
+                if (token != null && userId != null) {
+                    _loginResult.value = true
                 }
             } catch (e: Exception) {
                 Log.e(TAG, e.message.toString())

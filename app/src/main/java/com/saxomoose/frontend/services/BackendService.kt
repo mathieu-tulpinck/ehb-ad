@@ -23,15 +23,10 @@ import java.util.*
 
 // TODO get token from login activity.
 private const val BASE_URL = "http://demo.backend.test/api/"
-private const val token = "1|cYpZHYCdcL5HDY0LsVd1PriWMTZwSkhjeeoffEhY"
 private const val TOP_LEVEL_FIELD = "data"
 
-val client = OkHttpClient.Builder()
-    .addInterceptor(BackendInterceptor())
-    .build()
-
 // Adds request headers.
-class BackendInterceptor : Interceptor {
+class BackendInterceptor(private val token: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("Content-Type", "application/json")
@@ -57,17 +52,12 @@ private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .client(client)
-    .baseUrl(BASE_URL)
-    .build()
-
 interface BackendService {
     @POST("register")
     suspend fun register(@Body credentials : RequestBody) : retrofit2.Response<Unit>
     @POST("login")
-    suspend fun login(@Body credentials : RequestBody) : retrofit2.Response<LoginResponse>
+    @Wrapped(path = [TOP_LEVEL_FIELD])
+    suspend fun login(@Body credentials : RequestBody) : LoginResponse
     @GET("categories")
     suspend fun getCategories(): String
     @GET("users/{user}/events")
@@ -81,8 +71,22 @@ interface BackendService {
     suspend fun getEventCategories(@Path("event") eventId : Int) : List<Category>
 }
 
-object BackendApi {
-    val retrofitService : BackendService by lazy {
-        retrofit.create(BackendService::class.java)
+// This class should be singleton.
+class BackendApi() {
+    private lateinit var _token : String
+
+    constructor(token: String) : this() {
+        _token = token
     }
+    val retrofitService : BackendService by lazy {
+        Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(
+                // OKHttpClient
+                OkHttpClient.Builder()
+                .addInterceptor(BackendInterceptor(_token))
+                .build()
+            ).baseUrl(BASE_URL)
+            .build()
+            .create(BackendService::class.java) }
 }

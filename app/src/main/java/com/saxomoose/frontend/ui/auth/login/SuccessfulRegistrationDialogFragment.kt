@@ -1,4 +1,4 @@
-package com.saxomoose.frontend.ui.auth
+package com.saxomoose.frontend.ui.auth.login
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -11,7 +11,7 @@ class SuccessfulRegistrationDialogFragment : DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setMessage("Please activate your account per the instructions sent to your mailbox.")
+            builder.setMessage("An email with an activation link was sent to your mailbox. Please follow the instructions in the email.")
                 .setPositiveButton("OK",
                     DialogInterface.OnClickListener { dialog, id ->
                         getDialog()?.cancel()

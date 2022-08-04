@@ -1,13 +1,16 @@
 package com.saxomoose.frontend.ui.home.events
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
 import com.saxomoose.frontend.ui.home.MainActivity.Companion.USER_ID
 
@@ -16,12 +19,17 @@ class EventsFragment : Fragment() {
     // Binding object instance corresponding to the fragment_events.xml layout. This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks, when the view hierarchy is attached to the fragment.
     private lateinit var binding: FragmentEventsBinding
     private lateinit var eventsViewModel : EventsViewModel
+    // Retrieves userId supplied by AuthActivity.
+    val args by navArgs<EventsFragmentArgs>()
+    private lateinit var token : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // TODO error handling.
-        val userId = activity?.intent?.extras?.getInt("userId")!!
-        val viewModel : EventsViewModel by viewModels { EventsViewModelFactory(userId)}
+        // Retrieve token from SharedPreferences.
+        val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        token = sharedPref?.getString(getString(R.string.token), null).toString()
+        val viewModel : EventsViewModel by viewModels { EventsViewModelFactory(token, args.userId)}
         eventsViewModel = viewModel
     }
 

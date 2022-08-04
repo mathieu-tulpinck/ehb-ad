@@ -38,7 +38,7 @@ class RegisterViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val responseStatusCode = BackendApi.retrofitService.register(body).code()
+                val responseStatusCode = BackendApi().retrofitService.register(body).code()
                 if (responseStatusCode == 204) {
                     _registerResult.value = true
                 }

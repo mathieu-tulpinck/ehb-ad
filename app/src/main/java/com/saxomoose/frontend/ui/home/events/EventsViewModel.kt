@@ -7,13 +7,13 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "EventsViewModel"
 
-class EventsViewModelFactory(private val userId: Int): ViewModelProvider.NewInstanceFactory() {
+class EventsViewModelFactory(private val token: String, private val userId: Int): ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = EventsViewModel(userId) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = EventsViewModel(token, userId) as T
 }
 
 // The ViewModel attached to the EventsFragment.
-class EventsViewModel(userId: Int) : ViewModel() {
+class EventsViewModel(val token: String, userId: Int) : ViewModel() {
     // Internally, we use a mutable variable, because we will be updating the List of Event with new values.
     private var _events = MutableLiveData<List<Event>>()
     val events : LiveData<List<Event>> = _events
@@ -26,7 +26,7 @@ class EventsViewModel(userId: Int) : ViewModel() {
     private fun getUserEvents(userId: Int) {
         viewModelScope.launch {
             try {
-                _events.value = BackendApi.retrofitService.getUserEvents(userId)
+                _events.value = BackendApi(token).retrofitService.getUserEvents(userId)
                 // Log.v(TAG, _events.toString())
             } catch (e: Exception) {
                 _events.value = listOf()
