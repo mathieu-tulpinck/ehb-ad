@@ -17,7 +17,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "LoginViewModel"
 
-class LoginViewModelFactory(): ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(null, null) as T
 }

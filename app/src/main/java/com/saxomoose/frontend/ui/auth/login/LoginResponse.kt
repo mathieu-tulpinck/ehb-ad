@@ -6,4 +6,4 @@ data class LoginResponse(
     @Json(name = "user_id")
     val userId : Int,
     val token: String
-) { }
+)

@@ -9,4 +9,4 @@ data class Event (
 //    @Json(name = "bank_account_id") val bankAccountId : Int,
     val name: String,
     val date : Date
-){ }
+)

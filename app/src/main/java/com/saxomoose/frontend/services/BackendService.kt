@@ -42,7 +42,7 @@ class BackendInterceptor(private val token: String?) : Interceptor {
         } else {
             val newRequest  = request.newBuilder().addHeader("Authorization", "Bearer $token").build()
 
-            return chain.proceed(newRequest);
+            return chain.proceed(newRequest)
         }
     }
 }

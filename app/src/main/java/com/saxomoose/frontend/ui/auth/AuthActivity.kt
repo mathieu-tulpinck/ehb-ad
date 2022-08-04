@@ -1,6 +1,5 @@
 package com.saxomoose.frontend.ui.auth
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +17,7 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
         super.onCreate(savedInstanceState)
 
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        // sharedPref.edit().clear().apply()
         val token = sharedPref.getString(getString(R.string.token), null)
         val userId : Int = sharedPref.getInt(getString(R.string.userId), -1)
         // token = "1|cYpZHYCdcL5HDY0LsVd1PriWMTZwSkhjeeoffEhY"
@@ -32,10 +32,6 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.auth_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return false
     }
 
     override fun launchMainActivity(userId: Int) {

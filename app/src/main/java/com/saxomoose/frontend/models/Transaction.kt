@@ -4,4 +4,4 @@ data class Transaction(
     val id: Int,
     val uploaded: Boolean,
     val items: List<TransactionItem>
-) {}
+)

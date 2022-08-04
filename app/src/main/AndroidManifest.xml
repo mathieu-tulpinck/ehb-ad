@@ -18,7 +18,6 @@
         </activity>
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:parentActivityName=".ui.home.MainActivity"
             android:label="@string/authentication"
             android:exported="true">
             <intent-filter>
