@@ -1,5 +1,6 @@
 package com.saxomoose.frontend.ui.auth.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -70,7 +72,15 @@ class LoginFragment : Fragment() {
                 showLoginFailed()
             }
             if (loginResult) {
-                //
+                // Write token to SharedPreferences.
+                val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                with(sharedPref?.edit()) {
+                    this?.putString(getString(R.string.token), viewModel.token)
+                    this?.putInt(getString(R.string.userId), viewModel.userId!!)
+                    this?.apply()
+                }
+                val activity = activity as ActivityLauncher
+                activity.launchMainActivity(viewModel.userId!!)
             }
         })
 

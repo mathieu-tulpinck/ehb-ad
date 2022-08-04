@@ -21,26 +21,29 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import java.util.*
 
-// TODO get token from login activity.
 private const val BASE_URL = "http://demo.backend.test/api/"
 private const val TOP_LEVEL_FIELD = "data"
+private const val REGISTER_METHOD_HASHCODE = 1738314101
+private const val LOGIN_METHOD_HASHCODE = -1218096961
 
 // Adds request headers.
-class BackendInterceptor(private val token: String) : Interceptor {
+class BackendInterceptor(private val token: String?) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("Content-Type", "application/json")
         builder.addHeader("Accept", "application/json")
         val request = builder.build()
-        val tag = request.tag(Invocation::class.java)?.method()?.toString()
+        val tag = request.tag(Invocation::class.java)?.method()?.hashCode()
         // register and login requests should not have bearer token.
-        if (tag != "public abstract java.lang.Object com.saxomoose.frontend.services.BackendService.register(java.lang.String,kotlin.coroutines.Continuation)") {
+        if (REGISTER_METHOD_HASHCODE == tag) {
+            return chain.proceed(request)
+        } else if (LOGIN_METHOD_HASHCODE == tag) {
+            return chain.proceed(request)
+        } else {
             val newRequest  = request.newBuilder().addHeader("Authorization", "Bearer $token").build()
 
             return chain.proceed(newRequest);
         }
-
-        return chain.proceed(request)
     }
 }
 
@@ -73,7 +76,7 @@ interface BackendService {
 
 // This class should be singleton.
 class BackendApi() {
-    private lateinit var _token : String
+    private var _token : String? = null
 
     constructor(token: String) : this() {
         _token = token

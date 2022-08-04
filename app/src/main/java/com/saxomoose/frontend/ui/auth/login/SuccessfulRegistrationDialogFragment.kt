@@ -13,8 +13,8 @@ class SuccessfulRegistrationDialogFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             builder.setMessage("An email with an activation link was sent to your mailbox. Please follow the instructions in the email.")
                 .setPositiveButton("OK",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        getDialog()?.cancel()
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.cancel()
                     })
             // Create the AlertDialog object and return it
             builder.create()

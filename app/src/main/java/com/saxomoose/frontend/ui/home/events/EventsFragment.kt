@@ -20,17 +20,18 @@ class EventsFragment : Fragment() {
     private lateinit var binding: FragmentEventsBinding
     private lateinit var eventsViewModel : EventsViewModel
     // Retrieves userId supplied by AuthActivity.
-    val args by navArgs<EventsFragmentArgs>()
-    private lateinit var token : String
+    private val args by navArgs<EventsFragmentArgs>()
+    private var token : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO error handling.
         // Retrieve token from SharedPreferences.
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        token = sharedPref?.getString(getString(R.string.token), null).toString()
-        val viewModel : EventsViewModel by viewModels { EventsViewModelFactory(token, args.userId)}
-        eventsViewModel = viewModel
+        token = sharedPref?.getString(getString(R.string.token), null)
+        if (token != null) {
+            val viewModel : EventsViewModel by viewModels { EventsViewModelFactory(token!!, args.userId)}
+            eventsViewModel = viewModel
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {

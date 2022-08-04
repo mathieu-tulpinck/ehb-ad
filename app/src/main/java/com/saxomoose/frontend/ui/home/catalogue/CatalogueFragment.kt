@@ -24,7 +24,7 @@ class CatalogueFragment : Fragment() {
     private var eventId : Int = -1
     private lateinit var catalogueViewModel : CatalogueViewModel
     private val transactionViewModel : TransactionViewModel by activityViewModels()
-    private lateinit var token : String
+    private var token : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +32,11 @@ class CatalogueFragment : Fragment() {
         arguments?.let { eventId = it.getInt("eventId") }
         // Retrieve token from SharedPreferences.
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        token = sharedPref?.getString(getString(R.string.token), null).toString()
-        val viewModel : CatalogueViewModel by viewModels { CatalogueViewModelFactory(token, eventId) }
-        catalogueViewModel = viewModel
+        token = sharedPref?.getString(getString(R.string.token), null)
+        if (token != null) {
+            val viewModel : CatalogueViewModel by viewModels { CatalogueViewModelFactory(token!!, eventId) }
+            catalogueViewModel = viewModel
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {

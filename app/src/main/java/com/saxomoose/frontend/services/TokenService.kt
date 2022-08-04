@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.IBinder
 import com.saxomoose.frontend.R
 
-// TODO
+// TODO token should be retrieved from service and passed to BackendApi.
 class TokenService : Service() {
     var token: String
 
