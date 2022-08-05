@@ -67,7 +67,7 @@ class CatalogueFragment : Fragment() {
     // Calls shared ViewModel to increase the quantity of the TransactionItem.
     fun addItem(item: Item) {
         transactionViewModel.addItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} added to Transaction", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_LONG).show()
     }
 
 }

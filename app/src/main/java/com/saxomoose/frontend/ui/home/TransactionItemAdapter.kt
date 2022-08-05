@@ -14,16 +14,13 @@ import com.saxomoose.frontend.ui.home.transaction.TransactionFragment
 import kotlinx.coroutines.NonDisposableHandle.parent
 import java.lang.ClassCastException
 
-private const val ITEM = 0
-private const val BUTTON = 1
+class TransactionItemAdapter(private val transactionFragment: TransactionFragment) :
+    ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(
+        DiffCallback
+    ) {
 
-class TransactionItemAdapter(
-    private val transactionFragment: TransactionFragment
-) : ListAdapter<TransactionItem, RecyclerView.ViewHolder>(
-    DiffCallback
-){
-
-    class TransactionItemViewHolder(private var binding: TransactionItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TransactionItemViewHolder(private var binding: TransactionItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItem: TransactionItem) {
             binding.transactionItem = transactionItem
             binding.executePendingBindings()
@@ -32,43 +29,42 @@ class TransactionItemAdapter(
         val button = binding.button
     }
 
-    class ProcessButtonViewHolder(binding : ProcessButtonBinding) : RecyclerView.ViewHolder(binding.root) { }
-
     companion object DiffCallback : DiffUtil.ItemCallback<TransactionItem>() {
         override fun areItemsTheSame(oldItem: TransactionItem, newItem: TransactionItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: TransactionItem, newItem: TransactionItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: TransactionItem,
+            newItem: TransactionItem
+        ): Boolean {
             return oldItem == newItem
         }
     }
 
-    override fun getItemViewType(position: Int) : Int {
-        return when (getItem(position)) {
-            is TransactionItem -> ITEM
-            null -> BUTTON
-            else -> throw ClassCastException("Unknown viewType at $position")
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItemViewHolder {
+        return TransactionItemViewHolder(
+            TransactionItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
-            ITEM -> TransactionItemViewHolder(TransactionItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            BUTTON -> ProcessButtonViewHolder(ProcessButtonBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> throw ClassCastException("Unknown viewType $viewType")
-        }
-    }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
-            is TransactionItemViewHolder -> {
-                val transactionItem = getItem(position)
-                holder.bind(transactionItem)
-                holder.button.setOnClickListener {
+    override fun onBindViewHolder(
+        holder: TransactionItemViewHolder,
+        position: Int
+    ) {
+        val transactionItem = getItem(position)
+        holder.bind(transactionItem)
+        holder.button.setOnClickListener {
+            if (position == 0) {
+                transactionFragment.removeItemAndRedraw(transactionItem)
+            } else {
                 transactionFragment.removeItem(transactionItem)
-                this.notifyItemChanged(position)
-                }
+                notifyItemChanged(position)
             }
         }
     }

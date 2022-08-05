@@ -27,4 +27,6 @@
     <string name="token">token</string>
     <string name="userId">userId</string>
     <string name="save_transaction">Save Transaction</string>
+    <string name="empty_dataset">There is no %s to display</string>
+    <string name="submit">Submit</string>
 </resources>
