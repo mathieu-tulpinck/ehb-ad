@@ -4,6 +4,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.saxomoose.frontend.models.TransactionItem
+import com.saxomoose.frontend.ui.home.transaction.TransactionItemAdapter
 
 @BindingAdapter("transactionItems")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<TransactionItem>?) {

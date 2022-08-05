@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="catalogueViewModel"
             type="com.saxomoose.frontend.ui.home.catalogue.CatalogueViewModel" />
+
         <variable
             name="transactionViewModel"
-            type="com.saxomoose.frontend.ui.home.TransactionViewModel" />
-     </data>
+            type="com.saxomoose.frontend.ui.home.transaction.TransactionViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

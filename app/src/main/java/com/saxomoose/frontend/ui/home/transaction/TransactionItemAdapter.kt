@@ -1,18 +1,12 @@
-package com.saxomoose.frontend.ui.home
+package com.saxomoose.frontend.ui.home.transaction
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.saxomoose.frontend.R
-import com.saxomoose.frontend.databinding.ProcessButtonBinding
 import com.saxomoose.frontend.databinding.TransactionItemBinding
 import com.saxomoose.frontend.models.TransactionItem
-import com.saxomoose.frontend.ui.home.transaction.TransactionFragment
-import kotlinx.coroutines.NonDisposableHandle.parent
-import java.lang.ClassCastException
 
 class TransactionItemAdapter(private val transactionFragment: TransactionFragment) :
     ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(

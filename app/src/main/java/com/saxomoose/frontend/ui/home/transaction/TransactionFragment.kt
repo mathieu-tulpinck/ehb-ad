@@ -1,6 +1,5 @@
 package com.saxomoose.frontend.ui.home.transaction
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.models.TransactionItem
-import com.saxomoose.frontend.ui.home.TransactionItemAdapter
-import com.saxomoose.frontend.ui.home.TransactionViewModel
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding

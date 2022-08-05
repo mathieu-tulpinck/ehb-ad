@@ -15,7 +15,7 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentCatalogueBinding
 import com.saxomoose.frontend.models.Item
 import com.saxomoose.frontend.ui.home.MenuItemSelector
-import com.saxomoose.frontend.ui.home.TransactionViewModel
+import com.saxomoose.frontend.ui.home.transaction.TransactionViewModel
 
 // Displays the event items.
 class CatalogueFragment : Fragment() {

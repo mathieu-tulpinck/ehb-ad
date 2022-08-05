@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="transactionItem"
             type="com.saxomoose.frontend.models.TransactionItem" />

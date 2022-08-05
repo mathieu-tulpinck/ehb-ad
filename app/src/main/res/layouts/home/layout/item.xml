@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="catalogueFragment"
             type="com.saxomoose.frontend.ui.home.catalogue.CatalogueFragment" />
+
         <variable
             name="item"
             type="com.saxomoose.frontend.models.Item" />
@@ -39,8 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/add"
-            android:onClick="@{() -> catalogueFragment.addItem(item)}"/>
+            android:onClick="@{() -> catalogueFragment.addItem(item)}"
+            android:text="@string/add" />
 
     </LinearLayout>
 </layout>
