@@ -3,8 +3,8 @@ package com.saxomoose.frontend.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.saxomoose.frontend.entities.Transaction
-import com.saxomoose.frontend.entities.TransactionItem
+import com.saxomoose.frontend.entities.TransactionEntity
+import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.entities.TransactionWithItems
 import kotlinx.coroutines.flow.Flow
 
@@ -16,17 +16,18 @@ interface TransactionDao {
     fun getTransactionsWithItems(): Flow<List<TransactionWithItems>>
 
     @androidx.room.Transaction
-    suspend fun insertTransactionWithItems(transaction: Transaction, transactionItems: List<TransactionItem>) {
-        val parent = insertTransaction(transaction)
-        for (item in transactionItems) {
-            item.transactionId = parent
-            insertItem(item)
+    suspend fun insertTransactionWithItems(transactionItemEntities: List<TransactionItemEntity>) {
+        val transactionEntity = TransactionEntity()
+        val parent = insertTransaction(transactionEntity)
+        for (entity in transactionItemEntities) {
+            entity.transactionId = parent
+            insertItem(entity)
         }
     }
 
     @Insert
-    fun insertTransaction(transaction: Transaction) : Long
+    fun insertTransaction(transactionEntity: TransactionEntity) : Long
 
     @Insert
-    fun insertItem(transactionItem: TransactionItem) : Long
+    fun insertItem(transactionItemEntity: TransactionItemEntity) : Long
 }

@@ -5,19 +5,19 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.saxomoose.frontend.models.Category
-import com.saxomoose.frontend.models.DataItem
+import com.saxomoose.frontend.models.CategoryWrapper
 import java.text.NumberFormat
 import java.util.*
 
 @BindingAdapter("items")
 fun bindRecyclerView(recyclerView: RecyclerView, categories: List<Category>?) {
-    val adapter = recyclerView.adapter as DataItemAdapter
-    val data = mutableListOf<DataItem>()
+    val adapter = recyclerView.adapter as CategoryAdapter
+    val data = mutableListOf<CategoryWrapper>()
     if (categories != null) {
         for (category in categories) {
-            data.add(DataItem.CategoryRow(category))
+            data.add(CategoryWrapper.CategoryRow(category))
             for (item in category.items) {
-                data.add(DataItem.ItemRow(item))
+                data.add(CategoryWrapper.ItemRow(item))
             }
         }
     }

@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.saxomoose.frontend">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".FrontEndApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,12 +16,13 @@
         android:theme="@style/Theme.FrontEnd"
         android:usesCleartextTraffic="true"
         tools:targetApi="32">
-        <activity android:name=".ui.home.MainActivity">
-        </activity>
+        <activity
+            android:name=".ui.home.MainActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.auth.AuthActivity"
-            android:label="@string/authentication"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/authentication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

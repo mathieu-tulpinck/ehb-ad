@@ -11,11 +11,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentCatalogueBinding
 import com.saxomoose.frontend.models.Item
 import com.saxomoose.frontend.ui.home.MenuItemSelector
 import com.saxomoose.frontend.ui.home.transaction.TransactionViewModel
+import com.saxomoose.frontend.ui.home.transaction.TransactionViewModelFactory
 
 // Displays the event items.
 class CatalogueFragment : Fragment() {
@@ -23,7 +25,9 @@ class CatalogueFragment : Fragment() {
     private lateinit var binding: FragmentCatalogueBinding
     private var eventId : Int = -1
     private lateinit var catalogueViewModel : CatalogueViewModel
-    private val transactionViewModel : TransactionViewModel by activityViewModels()
+    private val transactionViewModel : TransactionViewModel by activityViewModels {
+        TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
+    }
     private var token : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,7 @@ class CatalogueFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.catalogueViewModel = catalogueViewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = DataItemAdapter(this)
+        binding.recyclerView.adapter = CategoryAdapter(this)
         val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
@@ -64,7 +68,7 @@ class CatalogueFragment : Fragment() {
         activity.selectEventsMenuItem()
     }
 
-    // Calls shared ViewModel to increase the quantity of the TransactionItem.
+    // Calls shared ViewModel to increase the quantity of the TransactionItemEntity.
     fun addItem(item: Item) {
         transactionViewModel.addItem(item)
         Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_LONG).show()

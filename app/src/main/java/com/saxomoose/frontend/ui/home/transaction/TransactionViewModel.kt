@@ -1,17 +1,30 @@
 package com.saxomoose.frontend.ui.home.transaction
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.saxomoose.frontend.data.TransactionDao
+import com.saxomoose.frontend.entities.TransactionEntity
+import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.Item
 import com.saxomoose.frontend.models.TransactionItem
+import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
-class TransactionViewModel : ViewModel() {
+class TransactionViewModelFactory(private val transactionDao: TransactionDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return TransactionViewModel(transactionDao) as T
+        }
+        throw IllegalArgumentException("Unknow ViewModel class")
+    }
+}
+
+class TransactionViewModel(private val transactionDao: TransactionDao) : ViewModel() {
 
     private var _transactionItems = MutableLiveData<List<TransactionItem>>()
     val transactionItems : LiveData<List<TransactionItem>> = _transactionItems
 
-    // Reset transaction logic.
+    // TODO reset transaction logic.
 
     fun addItem(item: Item) {
         var currentList = _transactionItems.value?.toMutableList()
@@ -40,4 +53,12 @@ class TransactionViewModel : ViewModel() {
             }
         }
     }
+
+    fun saveTransaction(transactionItemEntities: List<TransactionItemEntity>) {
+        viewModelScope.launch {
+            transactionDao.insertTransactionWithItems(transactionItemEntities)
+        }
+    }
+
+
 }

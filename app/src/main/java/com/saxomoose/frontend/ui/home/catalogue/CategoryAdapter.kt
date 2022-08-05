@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.saxomoose.frontend.databinding.CategoryBinding
 import com.saxomoose.frontend.databinding.ItemBinding
 import com.saxomoose.frontend.models.Category
-import com.saxomoose.frontend.models.DataItem
+import com.saxomoose.frontend.models.CategoryWrapper
 import com.saxomoose.frontend.models.Item
 import java.lang.ClassCastException
 
 private const val CATEGORY = 0
 private const val ITEM = 1
 
-class DataItemAdapter(private val fragment: CatalogueFragment) : ListAdapter<DataItem, RecyclerView.ViewHolder>(DiffCallback) {
+class CategoryAdapter(private val fragment: CatalogueFragment) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
 
     class CategoryViewHolder(private var binding: CategoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
@@ -25,27 +25,28 @@ class DataItemAdapter(private val fragment: CatalogueFragment) : ListAdapter<Dat
     }
 
     class ItemViewHolder(private var binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(fragment: CatalogueFragment, item: Item, ) {
-            binding.catalogueFragment = fragment
+        fun bind(item: Item, ) {
             binding.item = item
             binding.executePendingBindings()
         }
+
+        val button = binding.button
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<DataItem>() {
-        override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<CategoryWrapper>() {
+        override fun areItemsTheSame(oldItem: CategoryWrapper, newItem: CategoryWrapper): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+        override fun areContentsTheSame(oldItem: CategoryWrapper, newItem: CategoryWrapper): Boolean {
             return oldItem == newItem
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is DataItem.CategoryRow -> CATEGORY
-            is DataItem.ItemRow -> ITEM
+            is CategoryWrapper.CategoryRow -> CATEGORY
+            is CategoryWrapper.ItemRow -> ITEM
         }
     }
 
@@ -60,12 +61,15 @@ class DataItemAdapter(private val fragment: CatalogueFragment) : ListAdapter<Dat
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is CategoryViewHolder -> {
-                val categoryRow = getItem(position) as DataItem.CategoryRow
+                val categoryRow = getItem(position) as CategoryWrapper.CategoryRow
                 holder.bind(categoryRow.category)
             }
             is ItemViewHolder -> {
-                val itemRow = getItem(position) as DataItem.ItemRow
-                holder.bind(fragment, itemRow.item)
+                val itemRow = getItem(position) as CategoryWrapper.ItemRow
+                holder.bind(itemRow.item)
+                holder.button.setOnClickListener {
+                    fragment.addItem(itemRow.item)
+                }
             }
         }
     }

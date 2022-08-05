@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import com.saxomoose.frontend.models.TransactionItem
 
 @Entity(tableName = "transactions")
-data class Transaction(
+data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     // val uploaded: Boolean,
 ) { }

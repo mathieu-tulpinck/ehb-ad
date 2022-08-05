@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.saxomoose.frontend.entities.Transaction
-import com.saxomoose.frontend.entities.TransactionItem
+import com.saxomoose.frontend.entities.TransactionEntity
+import com.saxomoose.frontend.entities.TransactionItemEntity
 
-@Database(entities = [Transaction::class, TransactionItem::class], version = 1, exportSchema = false)
+@Database(entities = [TransactionEntity::class, TransactionItemEntity::class], version = 1, exportSchema = false)
 abstract class FrontEndDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
 

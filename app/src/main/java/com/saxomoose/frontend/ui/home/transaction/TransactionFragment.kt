@@ -11,17 +11,20 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
+import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.TransactionItem
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
-    private val viewModel : TransactionViewModel by activityViewModels()
+    private val viewModel : TransactionViewModel by activityViewModels {
+        TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
         binding = FragmentTransactionBinding.inflate(inflater)
-
 
         return binding.root
     }
@@ -43,12 +46,15 @@ class TransactionFragment : Fragment() {
             binding.recyclerView.adapter = TransactionItemAdapter(this)
             val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
             binding.recyclerView.addItemDecoration(dividerItemDecoration)
+            binding.transactionFab.setOnClickListener {
+                saveTransaction(viewModel.transactionItems.value)
+            }
             binding.recyclerView.visibility = View.VISIBLE
             binding.transactionFab.visibility = View.VISIBLE
         }
     }
 
-    // Calls shared ViewModel to decrease the quantity of the TransactionItem.
+    // Calls shared ViewModel to decrease the quantity of the TransactionItemEntity.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
         Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG).show()
@@ -59,5 +65,12 @@ class TransactionFragment : Fragment() {
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
         findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder().setPopUpTo(R.id.fragment_transaction, true).build())
         Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG).show()
+    }
+
+    private fun saveTransaction(transactionItems: List<TransactionItem>?) {
+        if (!transactionItems.isNullOrEmpty()) {
+            val itemEntities = transactionItems.map { it -> TransactionItemEntity(name = it.name, quantity = it.quantity) }
+            viewModel.saveTransaction(itemEntities)
+        }
     }
 }
