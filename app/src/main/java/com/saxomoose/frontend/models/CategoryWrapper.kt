@@ -8,7 +8,7 @@ sealed class CategoryWrapper {
     }
 
     data class CategoryRow(val category: Category) : CategoryWrapper() {
-        override val id  = category.id
+        override val id = category.id
     }
 
     abstract val id: Int

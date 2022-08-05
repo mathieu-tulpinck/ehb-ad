@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentOverviewBinding
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
+import com.saxomoose.frontend.models.TransactionWrapper
 import com.saxomoose.frontend.ui.home.transaction.TransactionItemAdapter
 import com.saxomoose.frontend.ui.home.transaction.TransactionViewModelFactory
 
@@ -32,21 +35,30 @@ class OverviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        if (viewModel.transactions.value.isNullOrEmpty()) {
-            binding.recyclerView.visibility = View.GONE
-            binding.emptyDatasetTextview.text = String.format(getString(R.string.empty_dataset), "transactions")
-            binding.emptyDatasetTextview.visibility = View.VISIBLE
+        val adapter = TransactionAdapter()
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
+        binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
-        } else {
-            binding.emptyDatasetTextview.visibility = View.GONE
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter = TransactionAdapter()
-            val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
-            binding.recyclerView.addItemDecoration(dividerItemDecoration)
-            binding.recyclerView.visibility = View.VISIBLE
+        viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
+            if (!transactions.isNullOrEmpty()) {
+                val data = mutableListOf<TransactionWrapper>()
+                for (transaction in transactions) {
+                    data.add(TransactionWrapper.TransactionRow(transaction.transactionEntity))
+                    for (item in transaction.itemEntities) {
+                        data.add(TransactionWrapper.TransactionItemRow(item))
+                    }
+                }
+                adapter.submitList(data)
+                binding.emptyDatasetTextview.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.VISIBLE
+            } else {
+                binding.emptyDatasetTextview.text = String.format(getString(R.string.empty_dataset), "transactions")
+                binding.recyclerView.visibility = View.GONE
+                binding.emptyDatasetTextview.visibility = View.VISIBLE
+            }
         }
     }
-
 }

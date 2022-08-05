@@ -7,5 +7,5 @@ data class Category(
     @Json(name = "event_id")
     val eventId: Int,
     val name: String,
-    val items : List<Item>
+    val items: List<Item>
 )

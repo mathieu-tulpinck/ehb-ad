@@ -1,5 +1,6 @@
 package com.saxomoose.frontend.ui.home.transaction
 
+import android.system.Os.remove
 import androidx.lifecycle.*
 import com.saxomoose.frontend.data.TransactionDao
 import com.saxomoose.frontend.entities.TransactionEntity
@@ -21,35 +22,28 @@ class TransactionViewModelFactory(private val transactionDao: TransactionDao) : 
 
 class TransactionViewModel(private val transactionDao: TransactionDao) : ViewModel() {
 
-    private var _transactionItems = MutableLiveData<List<TransactionItem>>()
-    val transactionItems : LiveData<List<TransactionItem>> = _transactionItems
+    private var _transactionItems = mutableListOf<TransactionItem>()
+    val transactionItems : List<TransactionItem> = _transactionItems
 
     // TODO reset transaction logic.
 
     fun addItem(item: Item) {
-        var currentList = _transactionItems.value?.toMutableList()
-        if (currentList == null) {
-            currentList = mutableListOf()
-        }
-        val transactionItem = currentList.firstOrNull { it.id == item.id}
+        val transactionItem = _transactionItems.firstOrNull { it.id == item.id}
         if (transactionItem == null) {
             val newTransactionItem = TransactionItem(item.id, item.name, 1)
-            currentList.add(newTransactionItem)
-            _transactionItems.value = currentList.toList()
+            _transactionItems.add(newTransactionItem)
         } else {
             transactionItem.quantity++
         }
     }
 
     fun removeItem(transactionItem: TransactionItem) {
-        val currentList = _transactionItems.value?.toMutableList()
-        val currentTransactionItem = currentList?.firstOrNull { it.id == transactionItem.id}
+        val currentTransactionItem = _transactionItems.firstOrNull { it.id == transactionItem.id}
         if (currentTransactionItem != null) {
             if (currentTransactionItem.quantity > 1) {
                 currentTransactionItem.quantity--
             } else {
-                currentList.remove(currentTransactionItem)
-                _transactionItems.value = currentList.toList()
+                _transactionItems.remove(currentTransactionItem)
             }
         }
     }
@@ -58,6 +52,7 @@ class TransactionViewModel(private val transactionDao: TransactionDao) : ViewMod
         viewModelScope.launch {
             transactionDao.insertTransactionWithItems(transactionItemEntities)
         }
+        _transactionItems.clear()
     }
 
 

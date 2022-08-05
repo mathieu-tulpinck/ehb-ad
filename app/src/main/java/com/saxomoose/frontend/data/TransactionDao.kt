@@ -1,5 +1,7 @@
 package com.saxomoose.frontend.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -26,8 +28,8 @@ interface TransactionDao {
     }
 
     @Insert
-    fun insertTransaction(transactionEntity: TransactionEntity) : Long
+    fun insertTransaction(transactionEntity: TransactionEntity): Long
 
     @Insert
-    fun insertItem(transactionItemEntity: TransactionItemEntity) : Long
+    fun insertItem(transactionItemEntity: TransactionItemEntity): Long
 }
