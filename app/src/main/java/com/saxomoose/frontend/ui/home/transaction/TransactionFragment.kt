@@ -74,5 +74,6 @@ class TransactionFragment : Fragment() {
     private fun saveTransaction(transactionItems: List<TransactionItem>) {
         val itemEntities = transactionItems.map { it -> TransactionItemEntity(name = it.name, quantity = it.quantity) }
         viewModel.saveTransaction(itemEntities)
+        Toast.makeText(activity?.applicationContext, "Transaction saved", Toast.LENGTH_LONG).show()
     }
 }
