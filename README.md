@@ -27,3 +27,9 @@ adb shell cat /system/etc/hosts
 ```
 On subsequent boots of the emulator, run `emulator -avd <name> -writable-system` in a terminal to load the correct image. When you run the application in Android Studio, the APK will be sent to that emulator.
 
+# Use
+
+Only users whose username and role have been inserted in the database may register. For demonstration purposes, the username of the tenant admin is `admin@demo.backend.test`.
+
+Tapping the FAB on the Transaction tab saves the current transaction to the local database. An overview of past transactions is displayed under the Overview tab.
+

@@ -46,17 +46,18 @@ class TransactionItemAdapter(private val transactionFragment: TransactionFragmen
         )
     }
 
-
     override fun onBindViewHolder(
         holder: TransactionItemViewHolder,
         position: Int
     ) {
         val transactionItem = getItem(position)
         holder.bind(transactionItem)
-        holder.button.setOnClickListener {
-            if (position == 0) {
+        if (position == 0) {
+            holder.button.setOnClickListener {
                 transactionFragment.removeItemAndRedraw(transactionItem)
-            } else {
+            }
+        } else {
+            holder.button.setOnClickListener {
                 transactionFragment.removeItem(transactionItem)
                 notifyItemChanged(position)
             }
