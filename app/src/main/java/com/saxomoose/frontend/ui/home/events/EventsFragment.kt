@@ -25,7 +25,8 @@ class EventsFragment : Fragment() {
     private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState) // Retrieve token from SharedPreferences.
+        super.onCreate(savedInstanceState)
+        // Retrieve token from SharedPreferences.
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         token = sharedPref?.getString(getString(R.string.token), null)
         if (token != null) {
@@ -42,11 +43,16 @@ class EventsFragment : Fragment() {
 
     // Inflates the layout with Data Binding, sets its lifecycle owner to the EventsFragment to enable data binding to observe LiveData, and sets up the RecyclerView with an adapter.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState) // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment.
-        binding.lifecycleOwner = viewLifecycleOwner // Giving the binding access to the EventsViewModel.
+        super.onViewCreated(view, savedInstanceState)
+
+        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment.
+        binding.lifecycleOwner = viewLifecycleOwner
+        // Giving the binding access to the EventsViewModel.
         binding.viewModel = eventsViewModel
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // Sets the adapter of the RecyclerView.
-        binding.recyclerView.adapter = EventAdapter(this) // Adds a divider between Event items.
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        // Sets the adapter of the RecyclerView.
+        binding.recyclerView.adapter = EventAdapter(this)
+        // Adds a divider between rows.
         val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
     }
