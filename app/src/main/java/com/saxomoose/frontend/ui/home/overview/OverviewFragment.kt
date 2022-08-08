@@ -26,7 +26,7 @@ class OverviewFragment : Fragment() {
         OverviewViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentOverviewBinding.inflate(inflater)
 
         return binding.root
@@ -38,7 +38,7 @@ class OverviewFragment : Fragment() {
         val adapter = TransactionAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->

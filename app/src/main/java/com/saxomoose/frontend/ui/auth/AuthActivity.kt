@@ -16,12 +16,9 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // sharedPref.edit().clear().apply()
-
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val token = sharedPref.getString(getString(R.string.token), null)
-        val userId : Int = sharedPref.getInt(getString(R.string.userId), -1)
-        // token = "1|cYpZHYCdcL5HDY0LsVd1PriWMTZwSkhjeeoffEhY"
+        val userId: Int = sharedPref.getInt(getString(R.string.userId), -1)
         if (token != null && userId != -1) {
             val intent = Intent(applicationContext, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

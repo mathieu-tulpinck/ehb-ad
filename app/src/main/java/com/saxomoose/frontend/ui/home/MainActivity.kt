@@ -38,16 +38,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector
         // ActionBar
         appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_events, R.id.fragment_transaction, R.id.fragment_overview))
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-//         TaskRunner.Backend connectivity test
-//        lifecycleScope.launch {
-//            val response = BackendApi.retrofitService.getEventCategories(1)
-//            logging(response.toString())
-//            val response2 = BackendApi.retrofitService.getUserEvents(1)
-//            logging(response2.toString())
-//        }
-
-
     }
 
     override fun selectEventsMenuItem() {

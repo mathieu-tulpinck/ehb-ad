@@ -17,9 +17,9 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
-    private lateinit var binding : FragmentLoginBinding
-    private val viewModel : LoginViewModel by viewModels { LoginViewModelFactory() }
-    private var successfulRegistration : Boolean = false
+    private lateinit var binding: FragmentLoginBinding
+    private val viewModel: LoginViewModel by viewModels { LoginViewModelFactory() }
+    private var successfulRegistration: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,7 @@ class LoginFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
@@ -85,18 +85,12 @@ class LoginFragment : Fragment() {
         })
 
         username.afterTextChanged {
-            viewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
-            )
+            viewModel.loginDataChanged(username.text.toString(), password.text.toString())
         }
 
         password.apply {
             afterTextChanged {
-                viewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
-                )
+                viewModel.loginDataChanged(username.text.toString(), password.text.toString())
             }
 
             setOnEditorActionListener { _, actionId, _ ->
@@ -127,8 +121,10 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
 
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        }
     })
 }

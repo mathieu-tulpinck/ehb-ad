@@ -15,17 +15,23 @@ import java.lang.ClassCastException
 private const val CATEGORY = 0
 private const val ITEM = 1
 
-class CategoryAdapter(private val fragment: CatalogueFragment) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
+class CategoryAdapter(
+    private val fragment: CatalogueFragment
+    ) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
 
-    class CategoryViewHolder(private var binding: CategoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class CategoryViewHolder(
+        private var binding: CategoryBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.category = category
             binding.executePendingBindings()
         }
     }
 
-    class ItemViewHolder(private var binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Item, ) {
+    class ItemViewHolder(
+        private var binding: ItemBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Item) {
             binding.item = item
             binding.executePendingBindings()
         }
@@ -51,7 +57,7 @@ class CategoryAdapter(private val fragment: CatalogueFragment) : ListAdapter<Cat
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             CATEGORY -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             ITEM -> ItemViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw ClassCastException("Unknown viewType $viewType")
@@ -59,7 +65,7 @@ class CategoryAdapter(private val fragment: CatalogueFragment) : ListAdapter<Cat
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is CategoryViewHolder -> {
                 val categoryRow = getItem(position) as CategoryWrapper.CategoryRow
                 holder.bind(categoryRow.category)

@@ -21,10 +21,8 @@ abstract class FrontEndDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(context.applicationContext, FrontEndDatabase::class.java, "frontend")
                     // Wipes and rebuilds instead of migrating if no Migration object.
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                // return instance
+                    .fallbackToDestructiveMigration().build()
+                INSTANCE = instance // return instance
                 instance
             }
         }

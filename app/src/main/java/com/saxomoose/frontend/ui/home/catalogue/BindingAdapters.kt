@@ -29,5 +29,4 @@ fun TextView.setText(price: Double) {
     val formatter = NumberFormat.getInstance(Locale.FRENCH)
     @SuppressLint("SetTextI18n")
     this.text = "${formatter.format(price)} €"
-    // "${String.format("%.2f", price)} €"
 }

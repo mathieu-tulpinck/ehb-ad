@@ -23,12 +23,12 @@ import com.saxomoose.frontend.ui.home.transaction.TransactionViewModelFactory
 class CatalogueFragment : Fragment() {
 
     private lateinit var binding: FragmentCatalogueBinding
-    private var eventId : Int = -1
-    private lateinit var catalogueViewModel : CatalogueViewModel
-    private val transactionViewModel : TransactionViewModel by activityViewModels {
+    private var eventId: Int = -1
+    private lateinit var catalogueViewModel: CatalogueViewModel
+    private val transactionViewModel: TransactionViewModel by activityViewModels {
         TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
     }
-    private var token : String? = null
+    private var token: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +38,12 @@ class CatalogueFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         token = sharedPref?.getString(getString(R.string.token), null)
         if (token != null) {
-            val viewModel : CatalogueViewModel by viewModels { CatalogueViewModelFactory(token!!, eventId) }
+            val viewModel: CatalogueViewModel by viewModels { CatalogueViewModelFactory(token!!, eventId) }
             catalogueViewModel = viewModel
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCatalogueBinding.inflate(inflater)
 
         return binding.root
@@ -57,7 +57,7 @@ class CatalogueFragment : Fragment() {
         binding.catalogueViewModel = catalogueViewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = CategoryAdapter(this)
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         // TransactionViewModel
@@ -71,7 +71,7 @@ class CatalogueFragment : Fragment() {
     // Calls shared ViewModel to increase the quantity of the TransactionItemEntity.
     fun addItem(item: Item) {
         transactionViewModel.addItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_LONG)
+            .show()
     }
-
 }

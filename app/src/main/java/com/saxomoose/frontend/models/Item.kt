@@ -10,4 +10,4 @@ data class Item(
     val price: Double,
     @Json(name = "vat_rate")
     val vatRate: Int
-)
+    )

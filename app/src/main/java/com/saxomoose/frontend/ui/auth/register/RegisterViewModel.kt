@@ -27,7 +27,8 @@ class RegisterViewModel : ViewModel() {
 
     fun register(name: String, username: String, password: String) {
         val rawBody = Json.encodeToJsonElement(WrappedBody(RegisterCredentials(name, username, password)))
-        val copy = rawBody.jsonObject.mapValues { it.value.jsonObject.toMutableMap() }.toMutableMap()
+        val copy = rawBody.jsonObject.mapValues { it.value.jsonObject.toMutableMap() }
+            .toMutableMap()
         val copyWithoutType = copy.apply {
             this["data"]?.apply {
                 this.remove("type")
@@ -52,8 +53,7 @@ class RegisterViewModel : ViewModel() {
     fun registerDataChanged(name: String, username: String, password: String) {
         if (!isNameValid(name)) {
             _registerForm.value = RegisterFormState(nameError = R.string.invalid_name)
-        }
-        else if (!isUserNameValid(username)) {
+        } else if (!isUserNameValid(username)) {
             _registerForm.value = RegisterFormState(usernameError = R.string.invalid_username)
         } else if (!isPasswordValid(password)) {
             _registerForm.value = RegisterFormState(passwordError = R.string.invalid_password)

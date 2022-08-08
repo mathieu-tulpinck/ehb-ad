@@ -9,14 +9,13 @@ import androidx.fragment.app.DialogFragment
 class SuccessfulRegistrationDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
+            // Uses the Builder class for convenient dialog construction.
             val builder = AlertDialog.Builder(it)
             builder.setMessage("An email with an activation link was sent to your mailbox. Please follow the instructions in the email.")
-                .setPositiveButton("OK",
-                    DialogInterface.OnClickListener { dialog, _ ->
-                        dialog.cancel()
-                    })
-            // Create the AlertDialog object and return it
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, _ ->
+                    dialog.cancel()
+                })
+            // Creates the AlertDialog object and return it.
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }

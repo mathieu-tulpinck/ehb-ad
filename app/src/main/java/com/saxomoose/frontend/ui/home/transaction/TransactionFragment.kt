@@ -23,11 +23,11 @@ import com.saxomoose.frontend.ui.home.overview.TransactionAdapter
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
-    private val viewModel : TransactionViewModel by activityViewModels {
+    private val viewModel: TransactionViewModel by activityViewModels {
         TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTransactionBinding.inflate(inflater)
 
         return binding.root
@@ -39,7 +39,7 @@ class TransactionFragment : Fragment() {
         val adapter = TransactionItemAdapter(this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context,  LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         if (viewModel.transactionItems.isNotEmpty()) {
@@ -61,14 +61,17 @@ class TransactionFragment : Fragment() {
     // Calls shared ViewModel to decrease the quantity of the TransactionItemEntity.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG)
+            .show()
     }
 
     fun removeItemAndRedraw(item: TransactionItem) {
         viewModel.removeItem(item)
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
-        findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder().setPopUpTo(R.id.fragment_transaction, true).build())
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder()
+            .setPopUpTo(R.id.fragment_transaction, true).build())
+        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun saveTransaction(transactionItems: List<TransactionItem>) {

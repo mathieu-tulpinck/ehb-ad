@@ -8,4 +8,4 @@ data class Category(
     val eventId: Int,
     val name: String,
     val items: List<Item>
-)
+    )

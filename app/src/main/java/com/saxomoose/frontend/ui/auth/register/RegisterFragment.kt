@@ -18,10 +18,10 @@ import com.saxomoose.frontend.databinding.FragmentRegisterBinding
 import com.saxomoose.frontend.ui.home.events.EventsFragmentDirections
 
 class RegisterFragment : Fragment() {
-    private lateinit var binding : FragmentRegisterBinding
-    private val viewModel : RegisterViewModel by viewModels()
+    private lateinit var binding: FragmentRegisterBinding
+    private val viewModel: RegisterViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) : View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
         binding = FragmentRegisterBinding.inflate(layoutInflater)
 
@@ -71,28 +71,16 @@ class RegisterFragment : Fragment() {
         })
 
         name.afterTextChanged {
-            viewModel.registerDataChanged(
-                name.text.toString(),
-                username.text.toString(),
-                password.text.toString()
-            )
+            viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
         }
 
         username.afterTextChanged {
-            viewModel.registerDataChanged(
-                name.text.toString(),
-                username.text.toString(),
-                password.text.toString()
-            )
+            viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
         }
 
         password.apply {
             afterTextChanged {
-                viewModel.registerDataChanged(
-                    name.text.toString(),
-                    username.text.toString(),
-                    password.text.toString()
-                )
+                viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
             }
 
             setOnEditorActionListener { _, actionId, _ ->
@@ -110,7 +98,8 @@ class RegisterFragment : Fragment() {
     }
 
     private fun showRegisterFailed() {
-        Toast.makeText(activity?.applicationContext, "Registration failed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity?.applicationContext, "Registration failed", Toast.LENGTH_SHORT)
+            .show()
     }
 }
 
@@ -123,8 +112,10 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
 
-        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+        }
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        }
     })
 }

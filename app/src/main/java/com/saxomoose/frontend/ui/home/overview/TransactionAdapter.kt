@@ -17,14 +17,18 @@ private const val ITEM = 1
 
 class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHolder>(DiffCallback) {
 
-    class TransactionEntityViewHolder(private var binding: TransactionEntityBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TransactionEntityViewHolder(
+        private var binding: TransactionEntityBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionEntity: TransactionEntity) {
             binding.transactionEntity = transactionEntity
             binding.executePendingBindings()
         }
     }
 
-    class TransactionItemEntityViewHolder(private var binding: TransactionItemEntityBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TransactionItemEntityViewHolder(
+        private var binding: TransactionItemEntityBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItemEntity: TransactionItemEntity) {
             binding.transactionItemEntity = transactionItemEntity
             binding.executePendingBindings()
@@ -49,19 +53,15 @@ class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHold
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
-            TRANSACTION -> TransactionEntityViewHolder(
-                TransactionEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            )
-            ITEM -> TransactionItemEntityViewHolder(
-                TransactionItemEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            )
+        return when (viewType) {
+            TRANSACTION -> TransactionEntityViewHolder(TransactionEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ITEM -> TransactionItemEntityViewHolder(TransactionItemEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is TransactionEntityViewHolder -> {
                 val transactionRow = getItem(position) as TransactionWrapper.TransactionRow
                 holder.bind(transactionRow.transactionEntity)
