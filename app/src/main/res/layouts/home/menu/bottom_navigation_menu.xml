@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fragment_events"
+        android:title="@string/events" />
+
+    <item
+        android:id="@+id/fragment_transaction"
+        android:title="@string/transaction" />
+
+    <item
+        android:id="@+id/fragment_overview"
+        android:title="@string/overview" />
+</menu>

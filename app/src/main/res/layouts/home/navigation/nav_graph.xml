@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/fragment_events">
+
+    <fragment
+        android:id="@+id/fragment_events"
+        android:name="com.saxomoose.frontend.ui.home.events.EventsFragment"
+        android:label="@string/events"
+        tools:layout="@layout/fragment_events">
+        <argument
+            android:name="userId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_fragment_events_to_fragment_catalogue"
+            app:destination="@id/fragment_catalogue" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_catalogue"
+        android:name="com.saxomoose.frontend.ui.home.catalogue.CatalogueFragment"
+        android:label="@string/catalogue"
+        tools:layout="@layout/fragment_catalogue">
+        <argument
+            android:name="eventId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_transaction"
+        android:name="com.saxomoose.frontend.ui.home.transaction.TransactionFragment"
+        android:label="@string/transaction"
+        tools:layout="@layout/fragment_transaction" />
+
+    <fragment
+        android:id="@+id/fragment_overview"
+        android:name="com.saxomoose.frontend.ui.home.overview.OverviewFragment"
+        android:label="@string/overview"
+        tools:layout="@layout/fragment_overview" />
+</navigation>
