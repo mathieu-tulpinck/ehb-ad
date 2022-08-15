@@ -25,7 +25,7 @@ adb shell
     $ echo '<docker host ip> backend.test' >> /system/etc/hosts
     $ echo '<docker host ip> demo.backend.test' >> /system/etc/hosts
 adb reboot
-// Verify if changes were written to file:
+# Verify if changes were written to file:
 adb shell cat /system/etc/hosts
 ```
 On subsequent boots of the emulator, run `emulator -avd <name> -writable-system` in a terminal to load the correct image. In other words, do not launch the emulator from Android Studio. Afterwards, run the application in Android Studio and the compiled APK will be sent to the running emulator.
