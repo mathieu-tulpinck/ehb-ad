@@ -8,9 +8,9 @@ Follow [README](https://github.com/mathieu-tulpinck/ehb-ss) to set up backend pr
 
 Clone repo: `git clone <url> FrontEnd`.
 
-The app sends requests to a backend server. In a local set-up, the `hosts` file of the emulator should be modified to map the ip address of the docker host running the backend project to the correct domains. This seems to only be possible with generic images that do not contain the Google apis.
+The app sends requests to a backend server. In a local set-up, the `hosts` file of the emulator should be modified to map the ip address of the docker host running the backend project to the correct domains. This seems to only be possible with generic images that do not include the Google APIs.
 
-Create an avd based on a generic image with api level 16 or higher.
+Create an avd based on a generic image with API level 16 or higher.
 
 Make the image writable after a remount: `emulator -avd <name> -writable-system`.
 
