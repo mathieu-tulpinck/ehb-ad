@@ -20,5 +20,6 @@ class RegisterFragmentInstrumentedTest {
         onView(withId(R.id.username)).perform(typeText("admin@demo.backend.test"))
         onView(withId(R.id.password)).perform(typeText("f!g<3YP<"))
         onView(withId(R.id.register_button)).perform(click())
+
     }
 }
