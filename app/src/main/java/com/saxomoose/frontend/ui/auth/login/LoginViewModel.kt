@@ -7,8 +7,6 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.ui.auth.LoginCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
-import com.saxomoose.frontend.ui.auth.login.LoginFormState
-import com.saxomoose.frontend.ui.home.catalogue.CatalogueViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*

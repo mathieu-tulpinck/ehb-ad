@@ -1,8 +1,6 @@
 package com.saxomoose.frontend.ui.home.catalogue
 
-import android.content.Context
 import androidx.lifecycle.*
-import com.saxomoose.frontend.R
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.services.BackendApi
 import kotlinx.coroutines.launch

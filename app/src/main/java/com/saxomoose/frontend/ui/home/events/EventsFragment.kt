@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
-import com.saxomoose.frontend.ui.home.MainActivity.Companion.USER_ID
 
 // Displays the user events.
 class EventsFragment : Fragment() {
