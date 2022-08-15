@@ -2,7 +2,6 @@ package com.saxomoose.frontend.ui.auth
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import retrofit2.http.Body
 
 @Serializable
 sealed class Credentials {

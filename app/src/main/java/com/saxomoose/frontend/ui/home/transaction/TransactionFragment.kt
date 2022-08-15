@@ -5,21 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.TransactionItem
-import com.saxomoose.frontend.ui.home.overview.TransactionAdapter
 
 class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
@@ -61,7 +57,7 @@ class TransactionFragment : Fragment() {
     // Calls shared ViewModel to decrease the quantity of the TransactionItemEntity.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG)
+        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
             .show()
     }
 
@@ -70,7 +66,7 @@ class TransactionFragment : Fragment() {
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
         findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder()
             .setPopUpTo(R.id.fragment_transaction, true).build())
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_LONG)
+        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
             .show()
     }
 

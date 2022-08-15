@@ -1,6 +1,5 @@
 package com.saxomoose.frontend.models
 
-import com.squareup.moshi.Json
 import java.util.*
 
 data class Event(

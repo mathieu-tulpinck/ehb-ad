@@ -108,7 +108,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showLoginFailed() {
-        Toast.makeText(activity?.applicationContext, "Login failed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity?.applicationContext, "Login failed", Toast.LENGTH_LONG).show()
     }
 }
 

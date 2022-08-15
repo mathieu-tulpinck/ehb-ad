@@ -5,19 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentOverviewBinding
-import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.models.TransactionWrapper
-import com.saxomoose.frontend.ui.home.transaction.TransactionItemAdapter
-import com.saxomoose.frontend.ui.home.transaction.TransactionViewModelFactory
 
 // Displays the transactions.
 class OverviewFragment : Fragment() {
