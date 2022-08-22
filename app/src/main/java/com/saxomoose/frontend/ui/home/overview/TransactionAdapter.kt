@@ -15,11 +15,12 @@ import java.lang.ClassCastException
 private const val TRANSACTION = 0
 private const val ITEM = 1
 
-class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHolder>(DiffCallback) {
-
+class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHolder>(DiffCallback)
+{
     class TransactionEntityViewHolder(
         private var binding: TransactionEntityBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+        ) : RecyclerView.ViewHolder(binding.root)
+    {
         fun bind(transactionEntity: TransactionEntity) {
             binding.transactionEntity = transactionEntity
             binding.executePendingBindings()
@@ -28,14 +29,16 @@ class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHold
 
     class TransactionItemEntityViewHolder(
         private var binding: TransactionItemEntityBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+        ) : RecyclerView.ViewHolder(binding.root)
+    {
         fun bind(transactionItemEntity: TransactionItemEntity) {
             binding.transactionItemEntity = transactionItemEntity
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<TransactionWrapper>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<TransactionWrapper>()
+    {
         override fun areItemsTheSame(oldItem: TransactionWrapper, newItem: TransactionWrapper): Boolean {
             return oldItem.id == newItem.id
         }

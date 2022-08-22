@@ -14,7 +14,8 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
 
 // Displays the user events.
-class EventsFragment : Fragment() {
+class EventsFragment : Fragment()
+{
     // Binding object instance corresponding to the fragment_events.xml layout. This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks, when the view hierarchy is attached to the fragment.
     private lateinit var binding: FragmentEventsBinding
     private lateinit var eventsViewModel: EventsViewModel
@@ -25,7 +26,7 @@ class EventsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Retrieve token from SharedPreferences.
+        // Retrieves token from SharedPreferences.
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         token = sharedPref?.getString(getString(R.string.token), null)
         if (token != null) {
@@ -46,7 +47,7 @@ class EventsFragment : Fragment() {
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment.
         binding.lifecycleOwner = viewLifecycleOwner
-        // Giving the binding access to the EventsViewModel.
+        // Gives binding access to the EventsViewModel.
         binding.viewModel = eventsViewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         // Sets the adapter of the RecyclerView.

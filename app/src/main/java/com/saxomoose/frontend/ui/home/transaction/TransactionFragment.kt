@@ -17,7 +17,8 @@ import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.TransactionItem
 
-class TransactionFragment : Fragment() {
+class TransactionFragment : Fragment()
+{
     private lateinit var binding: FragmentTransactionBinding
     private val viewModel: TransactionViewModel by activityViewModels {
         TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())

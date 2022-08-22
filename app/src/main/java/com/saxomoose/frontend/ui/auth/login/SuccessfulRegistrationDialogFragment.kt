@@ -6,7 +6,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 
-class SuccessfulRegistrationDialogFragment : DialogFragment() {
+class SuccessfulRegistrationDialogFragment : DialogFragment()
+{
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             // Uses the Builder class for convenient dialog construction.

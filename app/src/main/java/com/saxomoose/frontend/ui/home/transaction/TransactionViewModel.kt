@@ -10,7 +10,8 @@ import java.lang.IllegalArgumentException
 
 class TransactionViewModelFactory(
     private val transactionDao: TransactionDao
-    ) : ViewModelProvider.Factory {
+    ) : ViewModelProvider.Factory
+{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TransactionViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST") return TransactionViewModel(transactionDao) as T
@@ -21,8 +22,9 @@ class TransactionViewModelFactory(
 
 class TransactionViewModel(
     private val transactionDao: TransactionDao
-    ) : ViewModel() {
-
+    ) : ViewModel()
+{
+    // Data source is memory.
     private var _transactionItems = mutableListOf<TransactionItem>()
     val transactionItems: List<TransactionItem> = _transactionItems
 

@@ -16,7 +16,8 @@ import androidx.lifecycle.Observer
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment()
+{
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels { LoginViewModelFactory() }
     private var successfulRegistration: Boolean = false
@@ -37,6 +38,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // If successful registration, invite user to activate account.
         if (successfulRegistration) {
             val fragmentManager = parentFragmentManager
             val dialogFragment = SuccessfulRegistrationDialogFragment()
@@ -71,8 +73,8 @@ class LoginFragment : Fragment() {
             if (!loginResult) {
                 showLoginFailed()
             }
+            // If login succeedes, write token and userId to SharedPreferences.
             if (loginResult) {
-                // Write token and userId to SharedPreferences.
                 val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                 with(sharedPref?.edit()) {
                     this?.putString(getString(R.string.token), viewModel.token)

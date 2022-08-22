@@ -18,7 +18,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "RegisterViewModel"
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel : ViewModel()
+{
     private val _registerForm = MutableLiveData<RegisterFormState>()
     val registerFormState: LiveData<RegisterFormState> = _registerForm
 

@@ -9,12 +9,14 @@ import com.saxomoose.frontend.entities.TransactionWithItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TransactionDao {
+interface TransactionDao
+{
     // Not necessary to mark function as suspend.
     @androidx.room.Transaction
     @Query("SELECT * from transactions")
     fun getTransactionsWithItems(): Flow<List<TransactionWithItems>>
 
+    // Creates transaction and batch inserts children transaction items in a single db transaction.
     @androidx.room.Transaction
     suspend fun insertTransactionWithItems(transactionItemEntities: List<TransactionItemEntity>) {
         val transactionEntity = TransactionEntity()

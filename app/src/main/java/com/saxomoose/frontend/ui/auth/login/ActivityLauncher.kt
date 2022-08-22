@@ -1,5 +1,6 @@
 package com.saxomoose.frontend.ui.auth.login
 
-interface ActivityLauncher {
+interface ActivityLauncher
+{
     fun launchMainActivity(userId: Int)
 }

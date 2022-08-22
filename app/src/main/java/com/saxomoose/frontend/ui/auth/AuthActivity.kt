@@ -10,12 +10,14 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.ui.auth.login.ActivityLauncher
 import com.saxomoose.frontend.ui.home.MainActivity
 
-class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher {
+class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
+{
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // If token and userId are set, start MainActivity.
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val token = sharedPref.getString(getString(R.string.token), null)
         val userId: Int = sharedPref.getInt(getString(R.string.userId), -1)

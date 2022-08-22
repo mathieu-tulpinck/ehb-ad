@@ -29,14 +29,14 @@ private const val LOGIN_METHOD_HASHCODE = -1218096961
 // Adds request headers.
 class BackendInterceptor(
     private val token: String?
-    ) : Interceptor {
+    ) : Interceptor
+{
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("Content-Type", "application/json")
         builder.addHeader("Accept", "application/json")
         val request = builder.build()
-        val tag = request.tag(Invocation::class.java)?.method()
-            ?.hashCode()
+        val tag = request.tag(Invocation::class.java)?.method()?.hashCode()
         // register and login requests should not have bearer token.
         if (tag == REGISTER_METHOD_HASHCODE || tag == LOGIN_METHOD_HASHCODE) {
             return chain.proceed(request)
@@ -50,13 +50,14 @@ class BackendInterceptor(
 }
 
 private val moshi = Moshi.Builder()
-    // First adapter used to skip top level field of incoming json. TODO import functionality into project.
+    // First adapter used to skip top level field of incoming json. TODO: import functionality into project.
     .add(Wrapped.ADAPTER_FACTORY)
     // Date adapter.
     .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe()).add(KotlinJsonAdapterFactory())
     .build()
 
-interface BackendService {
+interface BackendService
+{
     @POST("register")
     suspend fun register(
         @Body
@@ -95,8 +96,9 @@ interface BackendService {
     ): List<Category>
 }
 
-// This class should be singleton.
-class BackendApi() {
+// TODO: this class should be singleton.
+class BackendApi()
+{
     private var _token: String? = null
 
     constructor(token: String) : this() {

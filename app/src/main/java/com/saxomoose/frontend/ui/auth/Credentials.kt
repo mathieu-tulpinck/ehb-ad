@@ -4,7 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Credentials {
+sealed class Credentials
+{
     abstract val userName: String
     abstract val password: String
 }

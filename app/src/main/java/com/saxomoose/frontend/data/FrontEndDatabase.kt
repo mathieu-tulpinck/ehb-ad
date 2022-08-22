@@ -8,11 +8,13 @@ import com.saxomoose.frontend.entities.TransactionEntity
 import com.saxomoose.frontend.entities.TransactionItemEntity
 
 @Database(entities = [TransactionEntity::class, TransactionItemEntity::class], version = 1, exportSchema = false)
-abstract class FrontEndDatabase : RoomDatabase() {
+abstract class FrontEndDatabase : RoomDatabase()
+{
     abstract fun transactionDao(): TransactionDao
 
     // Singleton pattern.
-    companion object {
+    companion object
+    {
         // Annotate INSTANCE with @Volatile. The value of a volatile variable will never be cached, and all writes and reads will be done to and from the main memory. This helps make sure the value of INSTANCE is always up-to-date and the same for all execution threads.
         @Volatile
         private var INSTANCE: FrontEndDatabase? = null

@@ -15,7 +15,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "LoginViewModel"
 
-class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory()
+{
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(null, null) as T
 }
@@ -23,8 +24,8 @@ class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 class LoginViewModel(
     var userId: Int?,
     var token: String?
-    ) : ViewModel() {
-
+    ) : ViewModel()
+{
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -33,8 +34,7 @@ class LoginViewModel(
 
     fun login(username: String, password: String) {
         val rawBody = Json.encodeToJsonElement(WrappedBody(LoginCredentials(username, password, android.os.Build.MODEL)))
-        val copy = rawBody.jsonObject.mapValues { it.value.jsonObject.toMutableMap() }
-            .toMutableMap()
+        val copy = rawBody.jsonObject.mapValues { it.value.jsonObject.toMutableMap() }.toMutableMap()
         val copyWithoutType = copy.apply {
             this["data"]?.apply {
                 this.remove("type")
