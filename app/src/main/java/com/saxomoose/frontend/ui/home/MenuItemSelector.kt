@@ -1,6 +1,5 @@
 package com.saxomoose.frontend.ui.home
 
-interface MenuItemSelector
-{
+interface MenuItemSelector {
     fun selectEventsMenuItem()
 }

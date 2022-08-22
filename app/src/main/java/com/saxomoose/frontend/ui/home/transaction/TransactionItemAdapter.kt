@@ -9,13 +9,11 @@ import com.saxomoose.frontend.databinding.TransactionItemBinding
 import com.saxomoose.frontend.models.TransactionItem
 
 class TransactionItemAdapter(
-    private val transactionFragment: TransactionFragment
-    ) : ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(DiffCallback)
-{
+        private val transactionFragment: TransactionFragment
+    ) : ListAdapter<TransactionItem, TransactionItemAdapter.TransactionItemViewHolder>(DiffCallback) {
     class TransactionItemViewHolder(
-        private var binding: TransactionItemBinding
-        ) : RecyclerView.ViewHolder(binding.root)
-    {
+            private var binding: TransactionItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItem: TransactionItem) {
             binding.transactionItem = transactionItem
             binding.executePendingBindings()
@@ -24,8 +22,7 @@ class TransactionItemAdapter(
         val button = binding.button
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<TransactionItem>()
-    {
+    companion object DiffCallback : DiffUtil.ItemCallback<TransactionItem>() {
         override fun areItemsTheSame(oldItem: TransactionItem, newItem: TransactionItem): Boolean {
             return oldItem.id == newItem.id
         }

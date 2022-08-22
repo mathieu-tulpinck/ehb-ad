@@ -10,8 +10,7 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.ui.auth.login.ActivityLauncher
 import com.saxomoose.frontend.ui.home.MainActivity
 
-class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
-{
+class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

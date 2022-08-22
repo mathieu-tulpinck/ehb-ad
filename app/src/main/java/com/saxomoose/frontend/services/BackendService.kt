@@ -28,9 +28,8 @@ private const val LOGIN_METHOD_HASHCODE = -1218096961
 
 // Adds request headers.
 class BackendInterceptor(
-    private val token: String?
-    ) : Interceptor
-{
+        private val token: String?
+    ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("Content-Type", "application/json")
@@ -42,7 +41,7 @@ class BackendInterceptor(
             return chain.proceed(request)
         } else {
             val newRequest = request.newBuilder().addHeader("Authorization", "Bearer $token")
-                .build()
+                    .build()
 
             return chain.proceed(newRequest)
         }
@@ -50,25 +49,24 @@ class BackendInterceptor(
 }
 
 private val moshi = Moshi.Builder()
-    // First adapter used to skip top level field of incoming json. TODO: import functionality into project.
-    .add(Wrapped.ADAPTER_FACTORY)
-    // Date adapter.
-    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe()).add(KotlinJsonAdapterFactory())
-    .build()
+        // First adapter used to skip top level field of incoming json. TODO: import functionality into project.
+        .add(Wrapped.ADAPTER_FACTORY)
+        // Date adapter.
+        .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe()).add(KotlinJsonAdapterFactory())
+        .build()
 
-interface BackendService
-{
+interface BackendService {
     @POST("register")
     suspend fun register(
-        @Body
-        credentials: RequestBody
+            @Body
+            credentials: RequestBody
     ): retrofit2.Response<Unit>
 
     @POST("login")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun login(
-        @Body
-        credentials: RequestBody
+            @Body
+            credentials: RequestBody
     ): LoginResponse
 
     @GET("categories")
@@ -77,28 +75,27 @@ interface BackendService
     @GET("users/{user}/events")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun getUserEvents(
-        @Path("user")
-        userId: Int
+            @Path("user")
+            userId: Int
     ): List<Event>
 
     @GET("events/{event}/items")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun getEventItems(
-        @Path("event")
-        eventId: Int
+            @Path("event")
+            eventId: Int
     ): List<Item>
 
     @GET("events/{event}/categories")
     @Wrapped(path = [TOP_LEVEL_FIELD])
     suspend fun getEventCategories(
-        @Path("event")
-        eventId: Int
+            @Path("event")
+            eventId: Int
     ): List<Category>
 }
 
 // TODO: this class should be singleton.
-class BackendApi()
-{
+class BackendApi() {
     private var _token: String? = null
 
     constructor(token: String) : this() {
@@ -107,9 +104,9 @@ class BackendApi()
 
     val retrofitService: BackendService by lazy {
         Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
-            .client(
-                // OKHttpClient
-                OkHttpClient.Builder().addInterceptor(BackendInterceptor(_token)).build())
-            .baseUrl(BASE_URL).build().create(BackendService::class.java)
+                .client(
+                        // OKHttpClient
+                        OkHttpClient.Builder().addInterceptor(BackendInterceptor(_token)).build())
+                .baseUrl(BASE_URL).build().create(BackendService::class.java)
     }
 }

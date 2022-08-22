@@ -14,8 +14,7 @@ import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
 
 // Displays the user events.
-class EventsFragment : Fragment()
-{
+class EventsFragment : Fragment() {
     // Binding object instance corresponding to the fragment_events.xml layout. This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks, when the view hierarchy is attached to the fragment.
     private lateinit var binding: FragmentEventsBinding
     private lateinit var eventsViewModel: EventsViewModel

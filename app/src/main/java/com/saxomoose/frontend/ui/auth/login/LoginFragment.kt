@@ -16,8 +16,7 @@ import androidx.lifecycle.Observer
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
-class LoginFragment : Fragment()
-{
+class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels { LoginViewModelFactory() }
     private var successfulRegistration: Boolean = false

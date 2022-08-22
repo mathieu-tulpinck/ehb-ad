@@ -15,10 +15,8 @@ import com.saxomoose.frontend.R
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector
-{
-    companion object
-    {
+class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector {
+    companion object {
         const val USER_ID = "userId"
     }
 

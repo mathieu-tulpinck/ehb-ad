@@ -20,8 +20,7 @@ import com.saxomoose.frontend.ui.home.transaction.TransactionViewModel
 import com.saxomoose.frontend.ui.home.transaction.TransactionViewModelFactory
 
 // Displays the event items.
-class CatalogueFragment : Fragment()
-{
+class CatalogueFragment : Fragment() {
     private lateinit var binding: FragmentCatalogueBinding
     private var eventId: Int = -1
     private lateinit var catalogueViewModel: CatalogueViewModel
@@ -72,6 +71,6 @@ class CatalogueFragment : Fragment()
     fun addItem(item: Item) {
         transactionViewModel.addItem(item)
         Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_SHORT)
-            .show()
+                .show()
     }
 }

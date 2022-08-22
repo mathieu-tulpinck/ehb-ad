@@ -12,12 +12,10 @@ import com.saxomoose.frontend.models.Event
 
 // This class implements a RecyclerView ListAdapter which uses data binding to present List data, including computing diffs between Lists.
 class EventAdapter(
-    private val fragment: Fragment
-    ) : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback)
-{
+        private val fragment: Fragment
+    ) : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback) {
     // The constructor takes the binding variable from the associated event.
-    class EventViewHolder(private var binding: EventBinding) : RecyclerView.ViewHolder(binding.root)
-    {
+    class EventViewHolder(private var binding: EventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
             binding.event = event
             binding.executePendingBindings()
@@ -27,8 +25,7 @@ class EventAdapter(
     }
 
     // Allows the RecyclerView to determine which items have changed when the list of events has been updated.
-    companion object DiffCallback : DiffUtil.ItemCallback<Event>()
-    {
+    companion object DiffCallback : DiffUtil.ItemCallback<Event>() {
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
             return oldItem.id == newItem.id
         }

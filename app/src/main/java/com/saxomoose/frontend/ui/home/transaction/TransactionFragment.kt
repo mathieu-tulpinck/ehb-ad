@@ -17,8 +17,7 @@ import com.saxomoose.frontend.databinding.FragmentTransactionBinding
 import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.TransactionItem
 
-class TransactionFragment : Fragment()
-{
+class TransactionFragment : Fragment() {
     private lateinit var binding: FragmentTransactionBinding
     private val viewModel: TransactionViewModel by activityViewModels {
         TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
@@ -59,16 +58,16 @@ class TransactionFragment : Fragment()
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
         Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
-            .show()
+                .show()
     }
 
     fun removeItemAndRedraw(item: TransactionItem) {
         viewModel.removeItem(item)
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
         findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder()
-            .setPopUpTo(R.id.fragment_transaction, true).build())
+                .setPopUpTo(R.id.fragment_transaction, true).build())
         Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
-            .show()
+                .show()
     }
 
     private fun saveTransaction(transactionItems: List<TransactionItem>) {

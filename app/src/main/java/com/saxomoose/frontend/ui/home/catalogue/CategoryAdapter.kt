@@ -16,13 +16,11 @@ private const val CATEGORY = 0
 private const val ITEM = 1
 
 class CategoryAdapter(
-    private val fragment: CatalogueFragment
-    ) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback)
-{
+        private val fragment: CatalogueFragment
+    ) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
     class CategoryViewHolder(
-        private var binding: CategoryBinding
-        ) : RecyclerView.ViewHolder(binding.root)
-    {
+            private var binding: CategoryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.category = category
             binding.executePendingBindings()
@@ -30,9 +28,8 @@ class CategoryAdapter(
     }
 
     class ItemViewHolder(
-        private var binding: ItemBinding
-        ) : RecyclerView.ViewHolder(binding.root)
-    {
+            private var binding: ItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
             binding.item = item
             binding.executePendingBindings()

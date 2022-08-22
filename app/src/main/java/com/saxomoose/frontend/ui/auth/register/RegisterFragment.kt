@@ -15,8 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.saxomoose.frontend.databinding.FragmentRegisterBinding
 
-class RegisterFragment : Fragment()
-{
+class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val viewModel: RegisterViewModel by viewModels()
 
@@ -98,7 +97,7 @@ class RegisterFragment : Fragment()
 
     private fun showRegisterFailed() {
         Toast.makeText(activity?.applicationContext, "Registration failed", Toast.LENGTH_LONG)
-            .show()
+                .show()
     }
 }
 

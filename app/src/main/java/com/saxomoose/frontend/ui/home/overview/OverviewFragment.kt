@@ -14,8 +14,7 @@ import com.saxomoose.frontend.databinding.FragmentOverviewBinding
 import com.saxomoose.frontend.models.TransactionWrapper
 
 // Displays the transactions.
-class OverviewFragment : Fragment()
-{
+class OverviewFragment : Fragment() {
     private lateinit var binding: FragmentOverviewBinding
     private val viewModel: OverviewViewModel by viewModels {
         OverviewViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())

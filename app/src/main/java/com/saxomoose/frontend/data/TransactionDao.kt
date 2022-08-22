@@ -9,8 +9,7 @@ import com.saxomoose.frontend.entities.TransactionWithItems
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TransactionDao
-{
+interface TransactionDao {
     // Not necessary to mark function as suspend.
     @androidx.room.Transaction
     @Query("SELECT * from transactions")
