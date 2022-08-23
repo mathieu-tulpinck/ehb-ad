@@ -40,7 +40,8 @@ class BackendInterceptor(
         if (tag == REGISTER_METHOD_HASHCODE || tag == LOGIN_METHOD_HASHCODE) {
             return chain.proceed(request)
         } else {
-            val newRequest = request.newBuilder().addHeader("Authorization", "Bearer $token")
+            val newRequest = request.newBuilder()
+                .addHeader("Authorization", "Bearer $token")
                 .build()
 
             return chain.proceed(newRequest)
@@ -106,8 +107,12 @@ class BackendApi() {
         Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(
                 // OKHttpClient
-                OkHttpClient.Builder().addInterceptor(BackendInterceptor(_token)).build()
+                OkHttpClient.Builder()
+                    .addInterceptor(BackendInterceptor(_token))
+                    .build()
             )
-            .baseUrl(BASE_URL).build().create(BackendService::class.java)
+            .baseUrl(BASE_URL)
+            .build()
+            .create(BackendService::class.java)
     }
 }
