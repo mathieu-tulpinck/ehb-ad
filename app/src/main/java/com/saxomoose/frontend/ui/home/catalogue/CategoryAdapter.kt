@@ -10,16 +10,15 @@ import com.saxomoose.frontend.databinding.ItemBinding
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.CategoryWrapper
 import com.saxomoose.frontend.models.Item
-import java.lang.ClassCastException
 
 private const val CATEGORY = 0
 private const val ITEM = 1
 
 class CategoryAdapter(
-        private val fragment: CatalogueFragment
-    ) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
+    private val fragment: CatalogueFragment
+) : ListAdapter<CategoryWrapper, RecyclerView.ViewHolder>(DiffCallback) {
     class CategoryViewHolder(
-            private var binding: CategoryBinding
+        private var binding: CategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.category = category
@@ -28,7 +27,7 @@ class CategoryAdapter(
     }
 
     class ItemViewHolder(
-            private var binding: ItemBinding
+        private var binding: ItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
             binding.item = item
@@ -43,7 +42,10 @@ class CategoryAdapter(
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CategoryWrapper, newItem: CategoryWrapper): Boolean {
+        override fun areContentsTheSame(
+            oldItem: CategoryWrapper,
+            newItem: CategoryWrapper
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -57,8 +59,20 @@ class CategoryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            CATEGORY -> CategoryViewHolder(CategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            ITEM -> ItemViewHolder(ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            CATEGORY -> CategoryViewHolder(
+                CategoryBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            ITEM -> ItemViewHolder(
+                ItemBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }

@@ -27,7 +27,11 @@ class LoginFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
@@ -74,7 +78,10 @@ class LoginFragment : Fragment() {
             }
             // If login succeedes, write token and userId to SharedPreferences.
             if (loginResult) {
-                val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                val sharedPref = activity?.getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
                 with(sharedPref?.edit()) {
                     this?.putString(getString(R.string.token), viewModel.token)
                     this?.putInt(getString(R.string.userId), viewModel.userId!!)
@@ -96,7 +103,10 @@ class LoginFragment : Fragment() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE -> viewModel.login(username.text.toString(), password.text.toString())
+                    EditorInfo.IME_ACTION_DONE -> viewModel.login(
+                        username.text.toString(),
+                        password.text.toString()
+                    )
                 }
                 false
             }

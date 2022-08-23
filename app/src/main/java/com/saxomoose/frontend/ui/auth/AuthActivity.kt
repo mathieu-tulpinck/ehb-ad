@@ -17,7 +17,8 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
         super.onCreate(savedInstanceState)
 
         // If token and userId are set, start MainActivity.
-        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref =
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val token = sharedPref.getString(getString(R.string.token), null)
         val userId: Int = sharedPref.getInt(getString(R.string.userId), -1)
         if (token != null && userId != -1) {
@@ -29,7 +30,8 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
             finish()
         }
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.auth_nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.auth_nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         title = "Authentication"

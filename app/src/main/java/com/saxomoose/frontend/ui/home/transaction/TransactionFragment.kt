@@ -23,7 +23,11 @@ class TransactionFragment : Fragment() {
         TransactionViewModelFactory((activity?.application as FrontEndApplication).database.transactionDao())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentTransactionBinding.inflate(inflater)
 
         return binding.root
@@ -35,7 +39,10 @@ class TransactionFragment : Fragment() {
         val adapter = TransactionItemAdapter(this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.recyclerView.context,
+            LinearLayoutManager(requireContext()).orientation
+        )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         if (viewModel.transactionItems.isNotEmpty()) {
@@ -47,7 +54,8 @@ class TransactionFragment : Fragment() {
             binding.recyclerView.visibility = View.VISIBLE
             binding.transactionFab.visibility = View.VISIBLE
         } else {
-            binding.emptyDatasetTextview.text = String.format(getString(R.string.empty_dataset), "transaction items")
+            binding.emptyDatasetTextview.text =
+                String.format(getString(R.string.empty_dataset), "transaction items")
             binding.recyclerView.visibility = View.GONE
             binding.transactionFab.visibility = View.GONE
             binding.emptyDatasetTextview.visibility = View.VISIBLE
@@ -57,21 +65,36 @@ class TransactionFragment : Fragment() {
     // Calls shared ViewModel to decrease the quantity of the TransactionItemEntity.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
-                .show()
+        Toast.makeText(
+            activity?.applicationContext,
+            "${item.name} removed from transaction",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     fun removeItemAndRedraw(item: TransactionItem) {
         viewModel.removeItem(item)
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
-        findNavController().navigate(R.id.fragment_transaction, arguments, NavOptions.Builder()
-                .setPopUpTo(R.id.fragment_transaction, true).build())
-        Toast.makeText(activity?.applicationContext, "${item.name} removed from transaction", Toast.LENGTH_SHORT)
-                .show()
+        findNavController().navigate(
+            R.id.fragment_transaction, arguments, NavOptions.Builder()
+                .setPopUpTo(R.id.fragment_transaction, true).build()
+        )
+        Toast.makeText(
+            activity?.applicationContext,
+            "${item.name} removed from transaction",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 
     private fun saveTransaction(transactionItems: List<TransactionItem>) {
-        val itemEntities = transactionItems.map { it -> TransactionItemEntity(name = it.name, quantity = it.quantity) }
+        val itemEntities = transactionItems.map { it ->
+            TransactionItemEntity(
+                name = it.name,
+                quantity = it.quantity
+            )
+        }
         viewModel.saveTransaction(itemEntities)
         Toast.makeText(activity?.applicationContext, "Transaction saved", Toast.LENGTH_LONG).show()
     }

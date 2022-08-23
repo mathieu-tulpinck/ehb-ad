@@ -34,15 +34,27 @@ class CatalogueFragment : Fragment() {
         // Retrieve eventId supplied at fragment creation.
         arguments?.let { eventId = it.getInt("eventId") }
         // Retrieve token from SharedPreferences.
-        val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        )
         token = sharedPref?.getString(getString(R.string.token), null)
         if (token != null) {
-            val viewModel: CatalogueViewModel by viewModels { CatalogueViewModelFactory(token!!, eventId) }
+            val viewModel: CatalogueViewModel by viewModels {
+                CatalogueViewModelFactory(
+                    token!!,
+                    eventId
+                )
+            }
             catalogueViewModel = viewModel
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentCatalogueBinding.inflate(inflater)
 
         return binding.root
@@ -56,7 +68,10 @@ class CatalogueFragment : Fragment() {
         binding.catalogueViewModel = catalogueViewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = CategoryAdapter(this)
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.recyclerView.context,
+            LinearLayoutManager(requireContext()).orientation
+        )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
         // TransactionViewModel
@@ -70,7 +85,11 @@ class CatalogueFragment : Fragment() {
     // Calls shared ViewModel to increase the quantity of the TransactionItemEntity.
     fun addItem(item: Item) {
         transactionViewModel.addItem(item)
-        Toast.makeText(activity?.applicationContext, "${item.name} added to transaction", Toast.LENGTH_SHORT)
-                .show()
+        Toast.makeText(
+            activity?.applicationContext,
+            "${item.name} added to transaction",
+            Toast.LENGTH_SHORT
+        )
+            .show()
     }
 }

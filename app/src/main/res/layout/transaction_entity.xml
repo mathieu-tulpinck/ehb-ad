@@ -17,7 +17,7 @@
         android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        app:transactionEntityId="@{transactionEntity.id}"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:transactionEntityId="@{transactionEntity.id}" />
 </layout>

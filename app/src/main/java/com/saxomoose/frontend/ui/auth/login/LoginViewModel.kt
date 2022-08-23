@@ -9,7 +9,9 @@ import com.saxomoose.frontend.ui.auth.LoginCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonObject
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -21,9 +23,9 @@ class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 }
 
 class LoginViewModel(
-        var userId: Int?,
-        var token: String?
-    ) : ViewModel() {
+    var userId: Int?,
+    var token: String?
+) : ViewModel() {
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -31,10 +33,18 @@ class LoginViewModel(
     val loginResult: LiveData<Boolean> = _loginResult
 
     fun login(username: String, password: String) {
-        val rawBody = Json.encodeToJsonElement(WrappedBody(LoginCredentials(username, password, android.os.Build.MODEL)))
+        val rawBody = Json.encodeToJsonElement(
+            WrappedBody(
+                LoginCredentials(
+                    username,
+                    password,
+                    android.os.Build.MODEL
+                )
+            )
+        )
         val copy = rawBody.jsonObject
-                .mapValues { it.value.jsonObject.toMutableMap() }
-                .toMutableMap()
+            .mapValues { it.value.jsonObject.toMutableMap() }
+            .toMutableMap()
         val copyWithoutType = copy.apply {
             this["data"]?.apply {
                 this.remove("type")

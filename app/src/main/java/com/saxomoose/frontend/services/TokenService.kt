@@ -11,7 +11,8 @@ class TokenService : Service() {
     var token: String
 
     init {
-        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref =
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         token = sharedPref.getString(getString(R.string.token), null).toString()
     }
 

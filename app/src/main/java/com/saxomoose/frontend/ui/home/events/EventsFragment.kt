@@ -26,15 +26,27 @@ class EventsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Retrieves token from SharedPreferences.
-        val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val sharedPref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        )
         token = sharedPref?.getString(getString(R.string.token), null)
         if (token != null) {
-            val viewModel: EventsViewModel by viewModels { EventsViewModelFactory(token!!, args.userId) }
+            val viewModel: EventsViewModel by viewModels {
+                EventsViewModelFactory(
+                    token!!,
+                    args.userId
+                )
+            }
             eventsViewModel = viewModel
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentEventsBinding.inflate(inflater)
 
         return binding.root
@@ -52,7 +64,10 @@ class EventsFragment : Fragment() {
         // Sets the adapter of the RecyclerView.
         binding.recyclerView.adapter = EventAdapter(this)
         // Adds a divider between rows.
-        val dividerItemDecoration = DividerItemDecoration(binding.recyclerView.context, LinearLayoutManager(requireContext()).orientation)
+        val dividerItemDecoration = DividerItemDecoration(
+            binding.recyclerView.context,
+            LinearLayoutManager(requireContext()).orientation
+        )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
     }
 }

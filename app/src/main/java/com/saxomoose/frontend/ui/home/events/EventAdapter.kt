@@ -12,10 +12,11 @@ import com.saxomoose.frontend.models.Event
 
 // This class implements a RecyclerView ListAdapter which uses data binding to present List data, including computing diffs between Lists.
 class EventAdapter(
-        private val fragment: Fragment
-    ) : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback) {
+    private val fragment: Fragment
+) : ListAdapter<Event, EventAdapter.EventViewHolder>(DiffCallback) {
     // The constructor takes the binding variable from the associated event.
-    class EventViewHolder(private var binding: EventBinding) : RecyclerView.ViewHolder(binding.root) {
+    class EventViewHolder(private var binding: EventBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
             binding.event = event
             binding.executePendingBindings()
@@ -37,7 +38,13 @@ class EventAdapter(
 
     // Creates new RecyclerView item views (invoked by the layout manager).
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(EventBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return EventViewHolder(
+            EventBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     // Updates the contents of the list item to reflect the item at the given position (invoked by the layout manager).
@@ -45,7 +52,8 @@ class EventAdapter(
         val event = getItem(position)
         holder.bind(event)
         holder.button.setOnClickListener {
-            val action = EventsFragmentDirections.actionFragmentEventsToFragmentCatalogue(eventId = event.id)
+            val action =
+                EventsFragmentDirections.actionFragmentEventsToFragmentCatalogue(eventId = event.id)
             findNavController(fragment).navigate(action)
         }
     }

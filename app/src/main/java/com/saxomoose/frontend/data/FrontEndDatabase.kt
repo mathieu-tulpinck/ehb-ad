@@ -7,7 +7,11 @@ import androidx.room.RoomDatabase
 import com.saxomoose.frontend.entities.TransactionEntity
 import com.saxomoose.frontend.entities.TransactionItemEntity
 
-@Database(entities = [TransactionEntity::class, TransactionItemEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [TransactionEntity::class, TransactionItemEntity::class],
+    version = 1,
+    exportSchema = false
+)
 abstract class FrontEndDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
 
@@ -19,9 +23,13 @@ abstract class FrontEndDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): FrontEndDatabase {
             return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(context.applicationContext, FrontEndDatabase::class.java, "frontend")
-                        // Wipes and rebuilds instead of migrating if no Migration object.
-                        .fallbackToDestructiveMigration().build()
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    FrontEndDatabase::class.java,
+                    "frontend"
+                )
+                    // Wipes and rebuilds instead of migrating if no Migration object.
+                    .fallbackToDestructiveMigration().build()
                 INSTANCE = instance // return instance
                 instance
             }

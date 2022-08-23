@@ -12,7 +12,9 @@ import com.saxomoose.frontend.ui.auth.RegisterCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonObject
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -26,10 +28,11 @@ class RegisterViewModel : ViewModel() {
     val loginResult: LiveData<Boolean> = _registerResult
 
     fun register(name: String, username: String, password: String) {
-        val rawBody = Json.encodeToJsonElement(WrappedBody(RegisterCredentials(name, username, password)))
+        val rawBody =
+            Json.encodeToJsonElement(WrappedBody(RegisterCredentials(name, username, password)))
         val copy = rawBody.jsonObject
-                .mapValues { it.value.jsonObject.toMutableMap() }
-                .toMutableMap()
+            .mapValues { it.value.jsonObject.toMutableMap() }
+            .toMutableMap()
         val copyWithoutType = copy.apply {
             this["data"]?.apply {
                 this.remove("type")
