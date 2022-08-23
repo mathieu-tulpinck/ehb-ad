@@ -21,6 +21,5 @@ class OverviewViewModelFactory(
 class OverviewViewModel(transactionDao: TransactionDao) : ViewModel() {
     // Data source is database.
     val transactions: LiveData<List<TransactionWithItems>> =
-        transactionDao.getTransactionsWithItems()
-            .asLiveData()
+        transactionDao.getTransactionsWithItems().asLiveData()
 }

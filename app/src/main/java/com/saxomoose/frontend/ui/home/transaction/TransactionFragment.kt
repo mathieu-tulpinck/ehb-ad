@@ -69,23 +69,24 @@ class TransactionFragment : Fragment() {
             activity?.applicationContext,
             "${item.name} removed from transaction",
             Toast.LENGTH_SHORT
-        )
-            .show()
+        ).show()
     }
 
     fun removeItemAndRedraw(item: TransactionItem) {
         viewModel.removeItem(item)
         // Hack to recreate fragment. Pops this fragment from the stack and navigate to itself.
         findNavController().navigate(
-            R.id.fragment_transaction, arguments, NavOptions.Builder()
-                .setPopUpTo(R.id.fragment_transaction, true).build()
+            R.id.fragment_transaction,
+            arguments,
+            NavOptions.Builder().setPopUpTo(
+                R.id.fragment_transaction, true
+            ).build()
         )
         Toast.makeText(
             activity?.applicationContext,
             "${item.name} removed from transaction",
             Toast.LENGTH_SHORT
-        )
-            .show()
+        ).show()
     }
 
     private fun saveTransaction(transactionItems: List<TransactionItem>) {
