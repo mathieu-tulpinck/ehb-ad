@@ -1,7 +1,6 @@
 package com.saxomoose.frontend.services
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.Event
@@ -15,7 +14,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.Response
-import retrofit2.Invocation
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body

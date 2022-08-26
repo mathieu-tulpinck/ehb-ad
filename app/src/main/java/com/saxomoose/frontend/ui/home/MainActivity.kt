@@ -11,8 +11,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.saxomoose.frontend.R
-import com.saxomoose.frontend.services.BackendApi
-import com.saxomoose.frontend.services.BackendService
 
 private const val TAG = "MainActivity"
 

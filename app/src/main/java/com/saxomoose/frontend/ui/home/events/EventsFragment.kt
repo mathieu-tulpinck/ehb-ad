@@ -60,8 +60,8 @@ class EventsFragment : Fragment() {
             LinearLayoutManager(requireContext()).orientation
         )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
-        eventsViewModel.events.observe(viewLifecycleOwner) {
-            events -> adapter.submitList(events)
+        eventsViewModel.events.observe(viewLifecycleOwner) { events ->
+            adapter.submitList(events)
         }
     }
 }
