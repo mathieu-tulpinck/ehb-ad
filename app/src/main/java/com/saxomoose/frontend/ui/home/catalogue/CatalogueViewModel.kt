@@ -3,19 +3,20 @@ package com.saxomoose.frontend.ui.home.catalogue
 import androidx.lifecycle.*
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.services.BackendApi
+import com.saxomoose.frontend.services.BackendService
 import kotlinx.coroutines.launch
 
 class CatalogueViewModelFactory(
-    private val token: String,
+    private val webService: BackendService,
     private val eventId: Int
 ) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T =
-        CatalogueViewModel(token, eventId) as T
+        CatalogueViewModel(webService, eventId) as T
 }
 
 class CatalogueViewModel(
-    val token: String,
+    private val webService: BackendService,
     eventId: Int
 ) : ViewModel() {
     private var _categories = MutableLiveData<List<Category>>()
@@ -28,7 +29,7 @@ class CatalogueViewModel(
     private fun getEventCategories(eventId: Int) {
         viewModelScope.launch {
             try {
-                _categories.value = BackendApi(token).retrofitService.getEventCategories(eventId)
+                _categories.value = webService.getEventCategories(eventId)
             } catch (e: Exception) {
                 _categories.value = listOf()
             }

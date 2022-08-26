@@ -13,11 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels {
+        RegisterViewModelFactory((activity?.application as FrontEndApplication).backendService)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +70,7 @@ class RegisterFragment : Fragment() {
                 showRegisterFailed()
             }
             if (registerResult) {
+                // On successful registration, set flag argument of LoginFragment to true.
                 val action = RegisterFragmentDirections.actionFragmentRegisterToFragmentLogin(
                     successfulRegistration = true
                 )

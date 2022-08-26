@@ -2,14 +2,13 @@ package com.saxomoose.frontend.ui.auth.register
 
 import android.util.Log
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.services.BackendApi
+import com.saxomoose.frontend.services.BackendService
 import com.saxomoose.frontend.ui.auth.RegisterCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
+import com.saxomoose.frontend.ui.auth.login.LoginViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -20,7 +19,14 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "RegisterViewModel"
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModelFactory(private val webService: BackendService) : ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = RegisterViewModel(webService) as T
+}
+
+class RegisterViewModel(
+    private val webService: BackendService
+) : ViewModel() {
     private val _registerForm = MutableLiveData<RegisterFormState>()
     val registerFormState: LiveData<RegisterFormState> = _registerForm
 
@@ -43,7 +49,7 @@ class RegisterViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val responseStatusCode = BackendApi().retrofitService.register(body).code()
+                val responseStatusCode = webService.register(body).code()
                 if (responseStatusCode == 204) {
                     _registerResult.value = true
                 }

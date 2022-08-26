@@ -13,12 +13,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels { LoginViewModelFactory() }
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory((activity?.application as FrontEndApplication).backendService)
+    }
     private var successfulRegistration: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +61,7 @@ class LoginFragment : Fragment() {
         viewModel.loginFormState.observe(viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
 
-            // Disable login button unless name/ username / password are valid.
+            // Disable login button unless name, username and password are valid.
             registerButton.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
@@ -76,7 +79,7 @@ class LoginFragment : Fragment() {
             if (!loginResult) {
                 showLoginFailed()
             }
-            // If login succeedes, write token and userId to SharedPreferences.
+            // If login succeeds, write token and userId to SharedPreferences.
             if (loginResult) {
                 val sharedPref = activity?.getSharedPreferences(
                     getString(R.string.preference_file_key),

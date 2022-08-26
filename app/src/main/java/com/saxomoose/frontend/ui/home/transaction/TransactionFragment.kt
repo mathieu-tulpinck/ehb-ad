@@ -62,7 +62,7 @@ class TransactionFragment : Fragment() {
         }
     }
 
-    // Calls shared ViewModel to decrease the quantity of the TransactionItemEntity.
+    // Calls shared ViewModel to decrease the quantity of the TransactionItem.
     fun removeItem(item: TransactionItem) {
         viewModel.removeItem(item)
         Toast.makeText(

@@ -4,7 +4,9 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.saxomoose.frontend.R
+import com.saxomoose.frontend.data.FrontEndDatabase
 import com.saxomoose.frontend.services.BackendApi
+import com.saxomoose.frontend.services.BackendService
 import com.saxomoose.frontend.ui.auth.LoginCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
 import kotlinx.coroutines.launch
@@ -17,15 +19,17 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "LoginViewModel"
 
-class LoginViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory(private val webService: BackendService) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(null, null) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(webService) as T
 }
 
 class LoginViewModel(
-    var userId: Int?,
-    var token: String?
+    private val webService: BackendService
 ) : ViewModel() {
+    var userId: Int? = null
+    var token: String? = null
+
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -55,7 +59,7 @@ class LoginViewModel(
 
         viewModelScope.launch {
             try {
-                val response = BackendApi().retrofitService.login(body)
+                val response = webService.login(body)
                 token = response.token
                 userId = response.userId
                 if (token != null && userId != null) {

@@ -1,5 +1,9 @@
 package com.saxomoose.frontend.services
 
+import android.content.Context
+import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
+import com.saxomoose.frontend.R
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.Event
 import com.saxomoose.frontend.models.Item
@@ -26,10 +30,10 @@ private const val TOP_LEVEL_FIELD = "data"
 private const val REGISTER_METHOD_HASHCODE = 1738314101
 private const val LOGIN_METHOD_HASHCODE = -1218096961
 
-// Adds request headers.
 class BackendInterceptor(
     private val token: String?
 ) : Interceptor {
+    // Adds request headers.
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         builder.addHeader("Content-Type", "application/json")
@@ -95,24 +99,28 @@ interface BackendService {
     ): List<Category>
 }
 
-// TODO: this class should be singleton.
-class BackendApi() {
-    private var _token: String? = null
+abstract class BackendApi {
+    companion object {
+        @Volatile
+        private var INSTANCE: BackendService? = null
 
-    constructor(token: String) : this() {
-        _token = token
-    }
-
-    val retrofitService: BackendService by lazy {
-        Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
-            .client(
-                // OKHttpClient
-                OkHttpClient.Builder()
-                    .addInterceptor(BackendInterceptor(_token))
+        fun getService(context: Context): BackendService {
+            val sharedPref = context.applicationContext.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+            val token = sharedPref.getString(context.getString(R.string.token), null).toString()
+            return INSTANCE ?: synchronized(this) {
+                val instance = Retrofit.Builder()
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .client(
+                        OkHttpClient.Builder()
+                        .addInterceptor(BackendInterceptor(token))
+                        .build()
+                    )
+                    .baseUrl(BASE_URL)
                     .build()
-            )
-            .baseUrl(BASE_URL)
-            .build()
-            .create(BackendService::class.java)
+                    .create(BackendService::class.java)
+                INSTANCE = instance
+                instance
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentEventsBinding
 
@@ -34,7 +35,7 @@ class EventsFragment : Fragment() {
         if (token != null) {
             val viewModel: EventsViewModel by viewModels {
                 EventsViewModelFactory(
-                    token!!,
+                    (activity?.application as FrontEndApplication).backendService,
                     args.userId
                 )
             }

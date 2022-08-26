@@ -42,7 +42,7 @@ class CatalogueFragment : Fragment() {
         if (token != null) {
             val viewModel: CatalogueViewModel by viewModels {
                 CatalogueViewModelFactory(
-                    token!!,
+                    (activity?.application as FrontEndApplication).backendService,
                     eventId
                 )
             }
