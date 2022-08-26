@@ -15,10 +15,6 @@ import com.saxomoose.frontend.R
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector {
-    companion object {
-        const val USER_ID = "userId"
-    }
-
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -28,8 +24,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        // Pass userId on to start destination.
-        navController.setGraph(R.navigation.nav_graph, intent.extras)
+        navController.setGraph(R.navigation.nav_graph)
 
         // BottomNavigation
         val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)

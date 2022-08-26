@@ -4,7 +4,6 @@ import android.app.Application
 import com.saxomoose.frontend.data.FrontEndDatabase
 import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.services.BackendService
-import okhttp3.internal.concurrent.TaskRunner
 
 // Base class for maintaining global application state.
 class FrontEndApplication : Application() {

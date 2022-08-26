@@ -91,7 +91,7 @@ class LoginFragment : Fragment() {
                     this?.apply()
                 }
                 val activity = activity as ActivityLauncher
-                activity.launchMainActivity(viewModel.userId!!)
+                activity.launchMainActivity()
             }
         })
 

@@ -4,8 +4,6 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.saxomoose.frontend.R
-import com.saxomoose.frontend.data.FrontEndDatabase
-import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.services.BackendService
 import com.saxomoose.frontend.ui.auth.LoginCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
@@ -19,7 +17,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "LoginViewModel"
 
-class LoginViewModelFactory(private val webService: BackendService) : ViewModelProvider.NewInstanceFactory() {
+class LoginViewModelFactory(private val webService: BackendService) :
+    ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T = LoginViewModel(webService) as T
 }

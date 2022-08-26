@@ -2,7 +2,6 @@ package com.saxomoose.frontend.ui.home.events
 
 import androidx.lifecycle.*
 import com.saxomoose.frontend.models.Event
-import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.services.BackendService
 import kotlinx.coroutines.launch
 
@@ -20,7 +19,7 @@ class EventsViewModelFactory(
 // The ViewModel attached to the EventsFragment.
 class EventsViewModel(
     private val webService: BackendService,
-    userId: Int
+    private val userId: Int
 ) : ViewModel() {
     // Internally, we use a mutable variable, because we will be updating the list of events with new values.
     private var _events = MutableLiveData<List<Event>>()

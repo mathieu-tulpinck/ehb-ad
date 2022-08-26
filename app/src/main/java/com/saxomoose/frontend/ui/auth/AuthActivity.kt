@@ -25,7 +25,6 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
             val intent = Intent(applicationContext, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            intent.putExtra(MainActivity.USER_ID, userId)
             startActivity(intent)
             finish()
         }
@@ -37,11 +36,10 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
         title = "Authentication"
     }
 
-    override fun launchMainActivity(userId: Int) {
+    override fun launchMainActivity() {
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-        intent.putExtra(MainActivity.USER_ID, userId)
         startActivity(intent)
         finish()
     }

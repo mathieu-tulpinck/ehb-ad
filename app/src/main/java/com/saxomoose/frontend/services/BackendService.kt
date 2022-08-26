@@ -1,8 +1,6 @@
 package com.saxomoose.frontend.services
 
 import android.content.Context
-import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.Event
@@ -105,15 +103,18 @@ abstract class BackendApi {
         private var INSTANCE: BackendService? = null
 
         fun getService(context: Context): BackendService {
-            val sharedPref = context.applicationContext.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+            val sharedPref = context.applicationContext.getSharedPreferences(
+                context.getString(R.string.preference_file_key),
+                Context.MODE_PRIVATE
+            )
             val token = sharedPref.getString(context.getString(R.string.token), null).toString()
             return INSTANCE ?: synchronized(this) {
                 val instance = Retrofit.Builder()
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .client(
                         OkHttpClient.Builder()
-                        .addInterceptor(BackendInterceptor(token))
-                        .build()
+                            .addInterceptor(BackendInterceptor(token))
+                            .build()
                     )
                     .baseUrl(BASE_URL)
                     .build()

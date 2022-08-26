@@ -4,11 +4,9 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.saxomoose.frontend.R
-import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.services.BackendService
 import com.saxomoose.frontend.ui.auth.RegisterCredentials
 import com.saxomoose.frontend.ui.auth.WrappedBody
-import com.saxomoose.frontend.ui.auth.login.LoginViewModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -19,9 +17,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 private const val TAG = "RegisterViewModel"
 
-class RegisterViewModelFactory(private val webService: BackendService) : ViewModelProvider.NewInstanceFactory() {
+class RegisterViewModelFactory(private val webService: BackendService) :
+    ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T = RegisterViewModel(webService) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T =
+        RegisterViewModel(webService) as T
 }
 
 class RegisterViewModel(

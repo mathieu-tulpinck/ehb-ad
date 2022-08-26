@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.saxomoose.frontend.FrontEndApplication
@@ -19,24 +18,21 @@ class EventsFragment : Fragment() {
     // Binding object instance corresponding to the fragment_events.xml layout. This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks, when the view hierarchy is attached to the fragment.
     private lateinit var binding: FragmentEventsBinding
     private lateinit var eventsViewModel: EventsViewModel
-
-    // Retrieves userId supplied by AuthActivity.
-    private val args by navArgs<EventsFragmentArgs>()
-    private var token: String? = null
+    private var userId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Retrieves token from SharedPreferences.
+        // Retrieves userId from SharedPreferences.
         val sharedPref = activity?.getSharedPreferences(
             getString(R.string.preference_file_key),
             Context.MODE_PRIVATE
         )
-        token = sharedPref?.getString(getString(R.string.token), null)
-        if (token != null) {
+        userId = sharedPref?.getInt(getString(R.string.userId), -1)
+        if (userId != null && userId != -1) {
             val viewModel: EventsViewModel by viewModels {
                 EventsViewModelFactory(
                     (activity?.application as FrontEndApplication).backendService,
-                    args.userId
+                    userId!!
                 )
             }
             eventsViewModel = viewModel
