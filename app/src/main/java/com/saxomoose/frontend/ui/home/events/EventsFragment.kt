@@ -31,7 +31,7 @@ class EventsFragment : Fragment() {
         if (userId != null && userId != -1) {
             val viewModel: EventsViewModel by viewModels {
                 EventsViewModelFactory(
-                    (activity?.application as FrontEndApplication).backendServiceWithToken,
+                    (activity?.application as FrontEndApplication).backendServiceAuth,
                     userId!!
                 )
             }

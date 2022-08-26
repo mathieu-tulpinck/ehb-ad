@@ -32,7 +32,7 @@ class CatalogueFragment : Fragment() {
         arguments?.let { eventId = it.getInt("eventId") }
         val viewModel: CatalogueViewModel by viewModels {
             CatalogueViewModelFactory(
-                (activity?.application as FrontEndApplication).backendServiceWithToken,
+                (activity?.application as FrontEndApplication).backendServiceAuth,
                 eventId
             )
         }

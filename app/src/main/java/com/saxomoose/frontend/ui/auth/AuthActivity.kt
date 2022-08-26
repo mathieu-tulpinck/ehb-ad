@@ -38,7 +38,7 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
     }
 
     override fun launchMainActivity() {
-        // Resets the backend service. A new singleton object is created in MainActivity with the user token.
+        // Resets the backend service. A new singleton instance is created in MainActivity with the user token.
         BackendApi.deallocateInstance()
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

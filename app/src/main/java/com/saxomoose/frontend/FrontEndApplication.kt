@@ -10,5 +10,5 @@ class FrontEndApplication : Application() {
     // Using by lazy so the database and the repository are only created when they're needed rather than when the application starts.
     val database: FrontEndDatabase by lazy { FrontEndDatabase.getDatabase(this) }
     val backendService: BackendService by lazy { BackendApi.getService(this, false) }
-    val backendServiceWithToken: BackendService by lazy { BackendApi.getService(this, true) }
+    val backendServiceAuth: BackendService by lazy { BackendApi.getService(this, true) }
 }

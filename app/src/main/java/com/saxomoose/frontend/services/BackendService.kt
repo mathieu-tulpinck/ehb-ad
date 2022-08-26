@@ -7,6 +7,7 @@ import com.saxomoose.frontend.models.Event
 import com.saxomoose.frontend.models.Item
 import com.saxomoose.frontend.ui.auth.login.LoginResponse
 import com.serjltt.moshi.adapters.Wrapped
+import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -24,8 +25,48 @@ import java.util.*
 
 private const val BASE_URL = "http://demo.backend.test/api/"
 private const val TOP_LEVEL_FIELD = "data"
-private const val REGISTER_METHOD_HASHCODE = 1738314101
-private const val LOGIN_METHOD_HASHCODE = -1218096961
+
+abstract class BackendApi {
+    companion object {
+        @Volatile
+        private var INSTANCE: BackendService? = null
+
+        fun getService(context: Context, auth: Boolean): BackendService {
+            return INSTANCE ?: synchronized(this) {
+                var token: String? = null
+                if (auth) {
+                    val sharedPref = context.applicationContext.getSharedPreferences(
+                        context.getString(R.string.preference_file_key),
+                        Context.MODE_PRIVATE
+                    )
+                    token = sharedPref.getString(context.getString(R.string.token), null)
+                }
+
+                val instance = Retrofit.Builder()
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .client(
+                        if (auth) {
+                            OkHttpClient.Builder()
+                                .addInterceptor(BackendInterceptor(token))
+                                .build()
+                        } else {
+                            OkHttpClient.Builder()
+                                .build()
+                        }
+                    )
+                    .baseUrl(BASE_URL)
+                    .build()
+                    .create(BackendService::class.java)
+                INSTANCE = instance
+                instance
+            }
+        }
+
+        fun deallocateInstance() {
+            INSTANCE = null
+        }
+    }
+}
 
 class BackendInterceptor(
     private val token: String?
@@ -33,8 +74,6 @@ class BackendInterceptor(
     // Adds request headers.
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
-            .addHeader("Content-Type", "application/json")
-            .addHeader("Accept", "application/json")
             .addHeader("Authorization", "Bearer $token")
             .build()
 
@@ -86,46 +125,4 @@ interface BackendService {
         @Path("event")
         eventId: Int
     ): List<Category>
-}
-
-abstract class BackendApi {
-    companion object {
-        @Volatile
-        private var INSTANCE: BackendService? = null
-
-        fun getService(context: Context, auth: Boolean): BackendService {
-            return INSTANCE ?: synchronized(this) {
-                var token: String? = null
-                if (auth) {
-                    val sharedPref = context.applicationContext.getSharedPreferences(
-                        context.getString(R.string.preference_file_key),
-                        Context.MODE_PRIVATE
-                    )
-                    token = sharedPref.getString(context.getString(R.string.token), null)
-                }
-
-                val instance = Retrofit.Builder()
-                    .addConverterFactory(MoshiConverterFactory.create(moshi))
-                    .client(
-                        if (auth) {
-                            OkHttpClient.Builder()
-                                .addInterceptor(BackendInterceptor(token))
-                                .build()
-                        } else {
-                            OkHttpClient.Builder()
-                                .build()
-                        }
-                    )
-                    .baseUrl(BASE_URL)
-                    .build()
-                    .create(BackendService::class.java)
-                INSTANCE = instance
-                instance
-            }
-        }
-
-        fun deallocateInstance() {
-            INSTANCE = null
-        }
-    }
 }
