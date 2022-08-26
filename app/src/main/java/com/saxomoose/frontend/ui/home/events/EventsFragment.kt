@@ -31,7 +31,7 @@ class EventsFragment : Fragment() {
         if (userId != null && userId != -1) {
             val viewModel: EventsViewModel by viewModels {
                 EventsViewModelFactory(
-                    (activity?.application as FrontEndApplication).backendService,
+                    (activity?.application as FrontEndApplication).backendServiceWithToken,
                     userId!!
                 )
             }
@@ -49,22 +49,19 @@ class EventsFragment : Fragment() {
         return binding.root
     }
 
-    // Inflates the layout with Data Binding, sets its lifecycle owner to the EventsFragment to enable data binding to observe LiveData, and sets up the RecyclerView with an adapter.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment.
-        binding.lifecycleOwner = viewLifecycleOwner
-        // Gives binding access to the EventsViewModel.
-        binding.viewModel = eventsViewModel
+        val adapter = EventAdapter(this)
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        // Sets the adapter of the RecyclerView.
-        binding.recyclerView.adapter = EventAdapter(this)
-        // Adds a divider between rows.
         val dividerItemDecoration = DividerItemDecoration(
             binding.recyclerView.context,
             LinearLayoutManager(requireContext()).orientation
         )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
+        eventsViewModel.events.observe(viewLifecycleOwner) {
+            events -> adapter.submitList(events)
+        }
     }
 }

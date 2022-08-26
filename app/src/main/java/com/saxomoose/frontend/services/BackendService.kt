@@ -1,6 +1,7 @@
 package com.saxomoose.frontend.services
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.models.Category
 import com.saxomoose.frontend.models.Event
@@ -33,21 +34,13 @@ class BackendInterceptor(
 ) : Interceptor {
     // Adds request headers.
     override fun intercept(chain: Interceptor.Chain): Response {
-        val builder = chain.request().newBuilder()
-        builder.addHeader("Content-Type", "application/json")
-        builder.addHeader("Accept", "application/json")
-        val request = builder.build()
-        val tag = request.tag(Invocation::class.java)?.method()?.hashCode()
-        // register and login requests should not have bearer token.
-        if (tag == REGISTER_METHOD_HASHCODE || tag == LOGIN_METHOD_HASHCODE) {
-            return chain.proceed(request)
-        } else {
-            val newRequest = request.newBuilder()
-                .addHeader("Authorization", "Bearer $token")
-                .build()
+        val newRequest = chain.request().newBuilder()
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .addHeader("Authorization", "Bearer $token")
+            .build()
 
-            return chain.proceed(newRequest)
-        }
+        return chain.proceed(newRequest)
     }
 }
 
@@ -102,19 +95,28 @@ abstract class BackendApi {
         @Volatile
         private var INSTANCE: BackendService? = null
 
-        fun getService(context: Context): BackendService {
-            val sharedPref = context.applicationContext.getSharedPreferences(
-                context.getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE
-            )
-            val token = sharedPref.getString(context.getString(R.string.token), null).toString()
+        fun getService(context: Context, auth: Boolean): BackendService {
             return INSTANCE ?: synchronized(this) {
+                var token: String? = null
+                if (auth) {
+                    val sharedPref = context.applicationContext.getSharedPreferences(
+                        context.getString(R.string.preference_file_key),
+                        Context.MODE_PRIVATE
+                    )
+                    token = sharedPref.getString(context.getString(R.string.token), null)
+                }
+
                 val instance = Retrofit.Builder()
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .client(
-                        OkHttpClient.Builder()
-                            .addInterceptor(BackendInterceptor(token))
-                            .build()
+                        if (auth) {
+                            OkHttpClient.Builder()
+                                .addInterceptor(BackendInterceptor(token))
+                                .build()
+                        } else {
+                            OkHttpClient.Builder()
+                                .build()
+                        }
                     )
                     .baseUrl(BASE_URL)
                     .build()
@@ -122,6 +124,10 @@ abstract class BackendApi {
                 INSTANCE = instance
                 instance
             }
+        }
+
+        fun deallocateInstance() {
+            INSTANCE = null
         }
     }
 }

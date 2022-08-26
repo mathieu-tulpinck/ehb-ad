@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
+import com.saxomoose.frontend.services.BackendApi
 import com.saxomoose.frontend.ui.auth.login.ActivityLauncher
 import com.saxomoose.frontend.ui.home.MainActivity
 
@@ -37,6 +39,8 @@ class AuthActivity : AppCompatActivity(R.layout.activity_auth), ActivityLauncher
     }
 
     override fun launchMainActivity() {
+        // Resets the backend service. A new singleton object is created in MainActivity with the user token.
+        BackendApi.deallocateInstance()
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK

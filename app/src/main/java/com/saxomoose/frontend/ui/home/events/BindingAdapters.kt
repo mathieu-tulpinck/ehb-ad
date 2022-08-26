@@ -8,12 +8,6 @@ import com.saxomoose.frontend.models.Event
 import java.text.SimpleDateFormat
 import java.util.*
 
-@BindingAdapter("events")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Event>?) {
-    val adapter = recyclerView.adapter as EventAdapter
-    adapter.submitList(data)
-}
-
 @BindingAdapter("eventDate")
 fun TextView.setDate(rawDate: Date) {
     @SuppressLint("SimpleDateFormat")

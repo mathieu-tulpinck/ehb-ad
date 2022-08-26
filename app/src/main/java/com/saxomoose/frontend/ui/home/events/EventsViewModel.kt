@@ -19,7 +19,7 @@ class EventsViewModelFactory(
 // The ViewModel attached to the EventsFragment.
 class EventsViewModel(
     private val webService: BackendService,
-    private val userId: Int
+    userId: Int
 ) : ViewModel() {
     // Internally, we use a mutable variable, because we will be updating the list of events with new values.
     private var _events = MutableLiveData<List<Event>>()
@@ -33,8 +33,8 @@ class EventsViewModel(
     private fun getUserEvents(userId: Int) {
         viewModelScope.launch {
             try {
-                _events.value =
-                    webService.getUserEvents(userId) // Log.v(TAG, _events.toString())
+                _events.value = webService.getUserEvents(userId)
+
             } catch (e: Exception) {
                 _events.value = listOf()
             }
