@@ -7,7 +7,6 @@ import com.saxomoose.frontend.models.Event
 import com.saxomoose.frontend.models.Item
 import com.saxomoose.frontend.ui.auth.login.LoginResponse
 import com.serjltt.moshi.adapters.Wrapped
-import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
