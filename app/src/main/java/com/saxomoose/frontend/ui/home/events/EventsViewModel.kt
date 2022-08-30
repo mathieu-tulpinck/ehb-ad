@@ -31,10 +31,10 @@ class EventsViewModel(
 
     // Gets the events from the BackendService and updates the list of events.
     private fun getUserEvents(userId: Int) {
+
         viewModelScope.launch {
             try {
                 _events.value = webService.getUserEvents(userId)
-
             } catch (e: Exception) {
                 _events.value = listOf()
             }

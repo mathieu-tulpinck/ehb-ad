@@ -14,6 +14,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -46,10 +47,14 @@ abstract class BackendApi {
                     .client(
                         if (auth) {
                             OkHttpClient.Builder()
-                                .addInterceptor(BackendInterceptor(token))
+                                .addInterceptor(ContentNegociationInterceptor())
+                                .addInterceptor(TokenInterceptor(token))
+                                //.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                                 .build()
                         } else {
                             OkHttpClient.Builder()
+                                .addInterceptor(ContentNegociationInterceptor())
+                                //.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                                 .build()
                         }
                     )
@@ -67,13 +72,24 @@ abstract class BackendApi {
     }
 }
 
-class BackendInterceptor(
+// Adds bearer token to headers.
+class TokenInterceptor(
     private val token: String?
 ) : Interceptor {
-    // Adds request headers.
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
             .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return chain.proceed(newRequest)
+    }
+}
+
+// Adds Accept header. Content-type added automatically on POST requests.
+class ContentNegociationInterceptor() : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val newRequest = chain.request().newBuilder()
+            .addHeader("Accept", "application/json")
             .build()
 
         return chain.proceed(newRequest)
