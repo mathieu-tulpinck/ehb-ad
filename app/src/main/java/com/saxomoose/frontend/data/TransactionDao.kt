@@ -15,6 +15,7 @@ interface TransactionDao {
     @Query("SELECT * from transactions")
     fun getTransactionsWithItems(): Flow<List<TransactionWithItems>>
 
+    // Creates transaction and batch inserts children transaction items in a single db transaction.
     @androidx.room.Transaction
     suspend fun insertTransactionWithItems(transactionItemEntities: List<TransactionItemEntity>) {
         val transactionEntity = TransactionEntity()

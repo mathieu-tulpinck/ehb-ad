@@ -8,7 +8,8 @@ sealed class TransactionWrapper {
         override val id = transactionEntity.id
     }
 
-    data class TransactionItemRow(val transactionItemEntity: TransactionItemEntity) : TransactionWrapper() {
+    data class TransactionItemRow(val transactionItemEntity: TransactionItemEntity) :
+        TransactionWrapper() {
         override val id = transactionItemEntity.id
     }
 

@@ -13,13 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel: RegisterViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels {
+        RegisterViewModelFactory((activity?.application as FrontEndApplication).backendService)
+    }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentRegisterBinding.inflate(layoutInflater)
 
@@ -63,34 +70,57 @@ class RegisterFragment : Fragment() {
                 showRegisterFailed()
             }
             if (registerResult) {
-                val action = RegisterFragmentDirections.actionFragmentRegisterToFragmentLogin(successfulRegistration = true)
+                // On successful registration, set flag argument of LoginFragment to true.
+                val action = RegisterFragmentDirections.actionFragmentRegisterToFragmentLogin(
+                    successfulRegistration = true
+                )
                 findNavController().navigate(action)
             }
         })
 
         name.afterTextChanged {
-            viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
+            viewModel.registerDataChanged(
+                name.text.toString(),
+                username.text.toString(),
+                password.text.toString()
+            )
         }
 
         username.afterTextChanged {
-            viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
+            viewModel.registerDataChanged(
+                name.text.toString(),
+                username.text.toString(),
+                password.text.toString()
+            )
         }
 
         password.apply {
             afterTextChanged {
-                viewModel.registerDataChanged(name.text.toString(), username.text.toString(), password.text.toString())
+                viewModel.registerDataChanged(
+                    name.text.toString(),
+                    username.text.toString(),
+                    password.text.toString()
+                )
             }
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE -> viewModel.register(name.text.toString(), username.text.toString(), password.text.toString())
+                    EditorInfo.IME_ACTION_DONE -> viewModel.register(
+                        name.text.toString(),
+                        username.text.toString(),
+                        password.text.toString()
+                    )
                 }
                 false
             }
 
             registerButton.setOnClickListener {
                 loading.visibility = View.VISIBLE
-                viewModel.register(name.text.toString(), username.text.toString(), password.text.toString())
+                viewModel.register(
+                    name.text.toString(),
+                    username.text.toString(),
+                    password.text.toString()
+                )
             }
         }
     }

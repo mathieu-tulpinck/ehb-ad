@@ -15,7 +15,7 @@ data class RegisterCredentials(
     @SerialName("email")
     override val userName: String,
     override val password: String,
-    ) : Credentials()
+) : Credentials()
 
 @Serializable
 data class LoginCredentials(
@@ -24,9 +24,9 @@ data class LoginCredentials(
     override val password: String,
     @SerialName("device_name")
     val deviceName: String
-    ) : Credentials()
+) : Credentials()
 
 @Serializable
-data class WrappedBody (
+data class WrappedBody(
     val data: Credentials
-    )
+)

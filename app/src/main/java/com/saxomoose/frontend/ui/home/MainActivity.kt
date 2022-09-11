@@ -1,8 +1,8 @@
 package com.saxomoose.frontend.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,28 +15,29 @@ import com.saxomoose.frontend.R
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), MenuItemSelector {
-
-    companion object {
-        const val USER_ID = "userId"
-    }
-
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        // Pass userId on to start destination.
-        navController.setGraph(R.navigation.nav_graph, intent.extras)
+        navController.setGraph(R.navigation.nav_graph)
 
         // BottomNavigation
         val bottomNavView: BottomNavigationView = findViewById(R.id.bottom_nav_view)
         bottomNavView.setupWithNavController(navController)
 
         // ActionBar
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.fragment_events, R.id.fragment_transaction, R.id.fragment_overview))
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.fragment_events,
+                R.id.fragment_transaction,
+                R.id.fragment_overview
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 

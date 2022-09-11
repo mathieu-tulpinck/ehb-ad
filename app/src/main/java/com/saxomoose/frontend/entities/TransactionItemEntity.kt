@@ -10,4 +10,4 @@ class TransactionItemEntity(
     var transactionId: Long = -1,
     val name: String,
     val quantity: Int
-    )
+)

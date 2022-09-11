@@ -10,16 +10,14 @@ import com.saxomoose.frontend.databinding.TransactionItemEntityBinding
 import com.saxomoose.frontend.entities.TransactionEntity
 import com.saxomoose.frontend.entities.TransactionItemEntity
 import com.saxomoose.frontend.models.TransactionWrapper
-import java.lang.ClassCastException
 
 private const val TRANSACTION = 0
 private const val ITEM = 1
 
 class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHolder>(DiffCallback) {
-
     class TransactionEntityViewHolder(
         private var binding: TransactionEntityBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionEntity: TransactionEntity) {
             binding.transactionEntity = transactionEntity
             binding.executePendingBindings()
@@ -28,7 +26,7 @@ class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHold
 
     class TransactionItemEntityViewHolder(
         private var binding: TransactionItemEntityBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transactionItemEntity: TransactionItemEntity) {
             binding.transactionItemEntity = transactionItemEntity
             binding.executePendingBindings()
@@ -36,11 +34,17 @@ class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHold
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<TransactionWrapper>() {
-        override fun areItemsTheSame(oldItem: TransactionWrapper, newItem: TransactionWrapper): Boolean {
+        override fun areItemsTheSame(
+            oldItem: TransactionWrapper,
+            newItem: TransactionWrapper
+        ): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: TransactionWrapper, newItem: TransactionWrapper): Boolean {
+        override fun areContentsTheSame(
+            oldItem: TransactionWrapper,
+            newItem: TransactionWrapper
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -54,8 +58,20 @@ class TransactionAdapter : ListAdapter<TransactionWrapper, RecyclerView.ViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TRANSACTION -> TransactionEntityViewHolder(TransactionEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            ITEM -> TransactionItemEntityViewHolder(TransactionItemEntityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            TRANSACTION -> TransactionEntityViewHolder(
+                TransactionEntityBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            ITEM -> TransactionItemEntityViewHolder(
+                TransactionItemEntityBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }

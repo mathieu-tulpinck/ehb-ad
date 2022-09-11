@@ -13,12 +13,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.saxomoose.frontend.FrontEndApplication
 import com.saxomoose.frontend.R
 import com.saxomoose.frontend.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by viewModels { LoginViewModelFactory() }
+    private val viewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory((activity?.application as FrontEndApplication).backendService)
+    }
     private var successfulRegistration: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +30,11 @@ class LoginFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
@@ -37,6 +44,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // If successful registration, invite user to activate account.
         if (successfulRegistration) {
             val fragmentManager = parentFragmentManager
             val dialogFragment = SuccessfulRegistrationDialogFragment()
@@ -53,7 +61,7 @@ class LoginFragment : Fragment() {
         viewModel.loginFormState.observe(viewLifecycleOwner, Observer {
             val loginState = it ?: return@Observer
 
-            // Disable login button unless name/ username / password are valid.
+            // Disable login button unless name, username and password are valid.
             registerButton.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
@@ -71,16 +79,19 @@ class LoginFragment : Fragment() {
             if (!loginResult) {
                 showLoginFailed()
             }
+            // If login succeeds, write token and userId to SharedPreferences.
             if (loginResult) {
-                // Write token and userId to SharedPreferences.
-                val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                val sharedPref = activity?.getSharedPreferences(
+                    getString(R.string.preference_file_key),
+                    Context.MODE_PRIVATE
+                )
                 with(sharedPref?.edit()) {
                     this?.putString(getString(R.string.token), viewModel.token)
                     this?.putInt(getString(R.string.userId), viewModel.userId!!)
                     this?.apply()
                 }
                 val activity = activity as ActivityLauncher
-                activity.launchMainActivity(viewModel.userId!!)
+                activity.launchMainActivity()
             }
         })
 
@@ -95,7 +106,10 @@ class LoginFragment : Fragment() {
 
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
-                    EditorInfo.IME_ACTION_DONE -> viewModel.login(username.text.toString(), password.text.toString())
+                    EditorInfo.IME_ACTION_DONE -> viewModel.login(
+                        username.text.toString(),
+                        password.text.toString()
+                    )
                 }
                 false
             }

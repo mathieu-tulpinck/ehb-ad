@@ -8,4 +8,4 @@ data class TransactionWithItems(
     val transactionEntity: TransactionEntity,
     @Relation(parentColumn = "id", entityColumn = "transactionId")
     val itemEntities: List<TransactionItemEntity>
-    )
+)
